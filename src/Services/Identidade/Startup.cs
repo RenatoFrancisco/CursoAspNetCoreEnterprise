@@ -38,7 +38,13 @@ namespace NSE.Identidade.API
 
             services.AddControllers();
             services.AddSwaggerGen(c => 
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "NSE.Identidade.API", Version = "v1" }));
+                c.SwaggerDoc("v1", new OpenApiInfo 
+                { 
+                    Title = "NerdStore Enterprise Edition", 
+                    Version = "v1",
+                    Description = "Esta API faz parte do curso ASP.NET Core Enterprise Applications" 
+                }
+            ));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,7 +53,7 @@ namespace NSE.Identidade.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NSE.Identidade.API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
             }
 
             app.UseHttpsRedirection();
