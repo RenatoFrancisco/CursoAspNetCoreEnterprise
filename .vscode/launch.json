@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Services/Identidade/bin/Debug/net5.0/NSE.Identidade.API.dll",
+            "program": "${workspaceFolder}/src/Web/MVC/bin/Debug/net5.0/NSE.WebApp.MVC.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/Services/Identidade",
+            "cwd": "${workspaceFolder}/src/Web/MVC",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
             "serverReadyAction": {

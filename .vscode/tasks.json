@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Services/Identidade/NSE.Identidade.API.csproj",
+                "${workspaceFolder}/src/Web/MVC/NSE.WebApp.MVC.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Services/Identidade/NSE.Identidade.API.csproj",
+                "${workspaceFolder}/src/Web/MVC/NSE.WebApp.MVC.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/Services/Identidade/NSE.Identidade.API.csproj",
+                "${workspaceFolder}/src/Web/MVC/NSE.WebApp.MVC.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
