@@ -12,7 +12,7 @@ namespace NSE.WebApp.MVC.Services
 
         public AutenticacaoService(HttpClient httpClient) => _httpClient = httpClient;
 
-        public async Task<string> Login(UsuarioLogin usuarioLogin)
+        public async Task<UsuarioRespostaLogin> Login(UsuarioLogin usuarioLogin)
         {
             var loginContent = new StringContent(JsonSerializer.Serialize(usuarioLogin),
                                                  Encoding.UTF8,
@@ -21,10 +21,15 @@ namespace NSE.WebApp.MVC.Services
             var response = await _httpClient.PostAsync("http://localhost:5000/api/identidade/autenticar", loginContent);
             var result = await response.Content.ReadAsStringAsync();
 
-            return  result;
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            return  JsonSerializer.Deserialize<UsuarioRespostaLogin>(result, options);
         }
 
-        public async Task<string> Registro(UsuarioRegistro usuarioRegistro)
+        public async Task<UsuarioRespostaLogin> Registro(UsuarioRegistro usuarioRegistro)
         {
             var registroContent = new StringContent(JsonSerializer.Serialize(usuarioRegistro),
                                                  Encoding.UTF8,
@@ -32,8 +37,13 @@ namespace NSE.WebApp.MVC.Services
 
             var response = await _httpClient.PostAsync("http://localhost:5000/api/identidade/nova-conta", registroContent);
             var result = await response.Content.ReadAsStringAsync();
-            
-            return  result;
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            return  JsonSerializer.Deserialize<UsuarioRespostaLogin>(result, options);
         }
     }
 }
