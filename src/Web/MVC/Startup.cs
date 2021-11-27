@@ -10,16 +10,25 @@ namespace NSE.WebApp.MVC
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment hostingEnvironment)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(hostingEnvironment.ContentRootPath)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json", true, true)
+                .AddEnvironmentVariables();
+
+            // if (hostingEnvironment.IsDevelopment())
+            //     builder.AddUserSecrets<Startup>();
+
+            Configuration = builder.Build();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityConfiguration();
 
-            services.AddMvcConfiguration();
+            services.AddMvcConfiguration(Configuration);
 
             services.AddControllersWithViews();
 

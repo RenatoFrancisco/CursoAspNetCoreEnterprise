@@ -1,14 +1,18 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using NSE.WebApp.MVC.Extensions;
 
 namespace NSE.WebApp.MVC.Configurations
 {
     public static class WebAppConfig
     {
-        public static void AddMvcConfiguration(this IServiceCollection services) => services.AddControllers();
+        public static void AddMvcConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddControllers();
+            services.Configure<AppSettings>(configuration);
+        }
 
         public static void UseMvcConfigutarion(this IApplicationBuilder app, IWebHostEnvironment env)
         {
