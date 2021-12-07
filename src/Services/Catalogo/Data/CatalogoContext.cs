@@ -1,10 +1,12 @@
+using Core.Data;
 using Microsoft.EntityFrameworkCore;
 using NSE.Catalogo.API.Models;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NSE.Catalogo.API.Data
 {
-    public class CatalogoContext : DbContext
+    public class CatalogoContext : DbContext, IUnitOfWork
     {
         public DbSet<Produto> Produtos { get; set; }
         
@@ -20,5 +22,7 @@ namespace NSE.Catalogo.API.Data
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogoContext).Assembly);
         }
+
+        public async Task<bool> CommitAsync() => await SaveChangesAsync() > 0;
     }
 }
