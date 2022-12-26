@@ -1,11 +1,15 @@
-using Microsoft.AspNetCore.Identity;
-using NSE.Identidade.API.Data;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => 
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "NerdStore Enteprise Identity API",
+        Description = "This API makes parts of the Course ASP.NET Core Enterprise Applications"
+    });
+});
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -21,7 +25,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("../swagger/v1/swagger.json", "v1"));
 }
 
 app.UseHttpsRedirection();

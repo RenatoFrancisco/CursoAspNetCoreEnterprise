@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
-using NSE.Identidade.API.Models;
-
 namespace NSE.Identidade.API.Controllers;
 
+[ApiController]
 [Route("api/identity")]
 public class AuthController : Controller
 {
