@@ -1,8 +1,7 @@
 namespace NSE.Identidade.API.Controllers;
 
-[ApiController]
 [Route("api/identity")]
-public class AuthController : Controller
+public class AuthController : MainController
 {
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly UserManager<IdentityUser> _userManager;
@@ -20,7 +19,7 @@ public class AuthController : Controller
     [HttpPost("new-account")]
     public async Task<ActionResult> Register(RegisterUser registerUser) 
     {
-        if (!ModelState.IsValid) return BadRequest();
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
 
         IdentityUser user = new()
         {
@@ -31,19 +30,20 @@ public class AuthController : Controller
 
         var result = await _userManager.CreateAsync(user, registerUser.Password);
         if (result.Succeeded)
-        {
-            await _signInManager.SignInAsync(user, isPersistent: false);
-            return Ok();
-        }
+            return CustomResponse(await GenerateJwt(user.Email));
 
-        return BadRequest();
+        result.Errors
+            .ToList()
+            .ForEach(e => AddError(e.Description));
+
+        return CustomResponse();
     }
 
     [HttpPost("auth")]
 
     public async Task<ActionResult> Login(LoginUser loginUser) 
     {
-        if (!ModelState.IsValid) return BadRequest();
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
 
         var result =  await _signInManager.PasswordSignInAsync(loginUser.Email,
                                                                loginUser.Password,
@@ -51,9 +51,17 @@ public class AuthController : Controller
                                                                lockoutOnFailure: true);
 
         if (result.Succeeded) 
-            return Ok(await GenerateJwt(loginUser.Email));
+            return CustomResponse(await GenerateJwt(loginUser.Email));
 
-        return BadRequest();
+        if (result.IsLockedOut)
+        {
+            AddError("User blocked temporarly due invalid attempts");
+            return CustomResponse();
+        }
+
+        AddError("User or password incorrect");
+
+        return CustomResponse();
     }
 
     private async Task<LoginResponseUser> GenerateJwt(string email)
