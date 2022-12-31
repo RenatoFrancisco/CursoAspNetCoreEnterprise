@@ -1,6 +1,8 @@
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using System.ComponentModel.DataAnnotations;
 global using Microsoft.AspNetCore.Mvc.ModelBinding;
+global using NSE.Identidade.API.Configuration;
 global using System.IdentityModel.Tokens.Jwt;
 global using Microsoft.IdentityModel.Tokens;
 global using NSE.Identidade.API.Extensions;
