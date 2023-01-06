@@ -2,6 +2,26 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": ".NET Core Launch (Api)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/services/NSE.Identidade.API/bin/Debug/net7.0/NSE.Identidade.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/services/NSE.Identidade.API",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
             // Use IntelliSense to find out which attributes exist for C# debugging
             // Use hover for the description of the existing attributes
             // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
@@ -31,5 +51,13 @@
             "type": "coreclr",
             "request": "attach"
         }
-    ]
+    ],
+    "compounds": [
+        {
+            "name": "Both MCV & Web API",
+            "configurations": [
+                ".NET Core Launch (Api)",
+                ".NET Core Launch (web)"
+            ]
+        }
 }

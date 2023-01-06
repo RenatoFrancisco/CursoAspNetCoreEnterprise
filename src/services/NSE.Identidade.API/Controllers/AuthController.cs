@@ -39,7 +39,7 @@ public class AuthController : MainController
         return CustomResponse();
     }
 
-    [HttpPost("auth")]
+    [HttpPost("authenticate")]
 
     public async Task<ActionResult> Login(LoginUser loginUser) 
     {
