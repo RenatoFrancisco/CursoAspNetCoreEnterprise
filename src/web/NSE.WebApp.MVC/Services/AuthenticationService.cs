@@ -10,21 +10,26 @@ public class AuthenticationService : IAuthenticationService
 
     public AuthenticationService(HttpClient httpclient) => _httpclient = httpclient;
 
-    public async Task<string> Login(LoginUser loginUser)
+    public async Task<LoginResponseUser> Login(LoginUser loginUser)
     {
         var loginContent = new StringContent(JsonSerializer.Serialize(loginUser), Encoding.UTF8, "application/json");
 
         var response = await _httpclient.PostAsync("https://localhost:7271/api/identity/authenticate", loginContent);
 
-        return JsonSerializer.Deserialize<string>(await response.Content.ReadAsStreamAsync());
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+        return JsonSerializer.Deserialize<LoginResponseUser>(await response.Content.ReadAsStreamAsync(), options);
     }
 
-    public async Task<string> Register(RegisterUser registerUser)
+    public async Task<LoginResponseUser> Register(RegisterUser registerUser)
     {
         var registerContent = new StringContent(JsonSerializer.Serialize(registerUser), Encoding.UTF8, "application/json");
 
         var response = await _httpclient.PostAsync("https://localhost:7271/api/auth/new-account", registerContent);
 
-        return JsonSerializer.Deserialize<string>(await response.Content.ReadAsStreamAsync());
+        return JsonSerializer.Deserialize<LoginResponseUser>(await response.Content.ReadAsStreamAsync());
     }
 }
