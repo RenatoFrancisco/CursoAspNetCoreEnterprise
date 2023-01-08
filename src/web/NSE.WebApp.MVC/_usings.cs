@@ -2,8 +2,12 @@ global using IAuthenticationService = NSE.WebApp.MVC.Services.IAuthenticationSer
 global using AuthenticationService = NSE.WebApp.MVC.Services.AuthenticationService;
 global using Microsoft.AspNetCore.Authentication.Cookies;
 global using System.ComponentModel.DataAnnotations;
+global using Microsoft.AspNetCore.Authentication;
+global using System.IdentityModel.Tokens.Jwt;
 global using NSE.WebApp.MVC.Configuration;
+global using NSE.WebApp.MVC.Extensions;
 global using Microsoft.AspNetCore.Mvc;
-global using System.ComponentModel;
+global using System.Security.Claims;
 global using NSE.WebApp.MVC.Models;
+global using System.ComponentModel;
 global using System.Diagnostics;
