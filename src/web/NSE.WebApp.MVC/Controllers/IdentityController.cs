@@ -1,3 +1,7 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+
 namespace NSE.WebApp.MVC.Controllers;
 
 public class IdentityController : Controller
@@ -21,6 +25,8 @@ public class IdentityController : Controller
     public async Task<ActionResult> Register(RegisterUser registerUser)
     {
         var response = await _authenticationService.Register(registerUser);
+        await DoLogin(response);
+
         return View();
     }
 
@@ -36,6 +42,8 @@ public class IdentityController : Controller
     public async Task<IActionResult> Login(LoginUser loginUser)
     {
         var response = await _authenticationService.Login(loginUser);
+        await DoLogin(response);
+        
         return RedirectToAction("Index", "Home");
     }
 
@@ -45,4 +53,28 @@ public class IdentityController : Controller
     {
         return RedirectToAction("Index", "Home");
     }
+
+    public async Task DoLogin(LoginResponseUser response)
+    {
+        var token =  GetFormatedToken(response.AccessToken);
+
+        var claims = new List<Claim>();
+        claims.Add(new Claim("JWT", response.AccessToken));
+        claims.AddRange(token.Claims);
+
+        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var authProperties = new AuthenticationProperties
+        {
+            ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(60),
+            IsPersistent = true
+        };
+
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(claimsIdentity),
+            authProperties);
+    }
+
+    private static JwtSecurityToken GetFormatedToken(string jwtToken) =>
+        new JwtSecurityTokenHandler().ReadJwtToken(jwtToken) as JwtSecurityToken;
 }

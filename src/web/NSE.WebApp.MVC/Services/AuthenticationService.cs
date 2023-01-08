@@ -14,7 +14,7 @@ public class AuthenticationService : IAuthenticationService
     {
         var loginContent = new StringContent(JsonSerializer.Serialize(loginUser), Encoding.UTF8, "application/json");
 
-        var response = await _httpclient.PostAsync("https://localhost:7271/api/identity/authenticate", loginContent);
+        var response = await _httpclient.PostAsync("http://localhost:5226/api/identity/authenticate", loginContent);
 
         var options = new JsonSerializerOptions
         {
@@ -28,7 +28,7 @@ public class AuthenticationService : IAuthenticationService
     {
         var registerContent = new StringContent(JsonSerializer.Serialize(registerUser), Encoding.UTF8, "application/json");
 
-        var response = await _httpclient.PostAsync("https://localhost:7271/api/auth/new-account", registerContent);
+        var response = await _httpclient.PostAsync("http://localhost:5226/api/auth/new-account", registerContent);
 
         return JsonSerializer.Deserialize<LoginResponseUser>(await response.Content.ReadAsStreamAsync());
     }
