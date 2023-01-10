@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace NSE.WebApp.MVC.Services;
 
-public class AuthenticationService : IAuthenticationService
+public class AuthenticationService : Service, IAuthenticationService
 {
     private readonly HttpClient _httpclient;
 
@@ -14,12 +14,20 @@ public class AuthenticationService : IAuthenticationService
     {
         var loginContent = new StringContent(JsonSerializer.Serialize(loginUser), Encoding.UTF8, "application/json");
 
-        var response = await _httpclient.PostAsync("http://localhost:5226/api/identity/authenticate", loginContent);
-
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         };
+
+        var response = await _httpclient.PostAsync("http://localhost:5226/api/identity/authenticate", loginContent);
+        if (!HandleResponseErrors(response))
+        {
+            return new LoginResponseUser
+            {
+                ResponseResult =
+                    JsonSerializer.Deserialize<ResponseResult>(await response.Content.ReadAsStreamAsync(), options)
+            };
+        }
 
         return JsonSerializer.Deserialize<LoginResponseUser>(await response.Content.ReadAsStreamAsync(), options);
     }
@@ -28,7 +36,20 @@ public class AuthenticationService : IAuthenticationService
     {
         var registerContent = new StringContent(JsonSerializer.Serialize(registerUser), Encoding.UTF8, "application/json");
 
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
         var response = await _httpclient.PostAsync("http://localhost:5226/api/auth/new-account", registerContent);
+        if (!HandleResponseErrors(response))
+        {
+            return new LoginResponseUser
+            {
+                ResponseResult =
+                    JsonSerializer.Deserialize<ResponseResult>(await response.Content.ReadAsStreamAsync(), options)
+            };
+        }
 
         return JsonSerializer.Deserialize<LoginResponseUser>(await response.Content.ReadAsStreamAsync());
     }

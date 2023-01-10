@@ -1,6 +1,6 @@
 namespace NSE.WebApp.MVC.Controllers;
 
-public class IdentityController : Controller
+public class IdentityController : MainController
 {
     private readonly IAuthenticationService _authenticationService;
 
@@ -21,6 +21,9 @@ public class IdentityController : Controller
     public async Task<ActionResult> Register(RegisterUser registerUser)
     {
         var response = await _authenticationService.Register(registerUser);
+
+        if (ResponseHasErrors(response.ResponseResult)) return View(registerUser);
+
         await DoLogin(response);
 
         return View();
@@ -38,6 +41,9 @@ public class IdentityController : Controller
     public async Task<IActionResult> Login(LoginUser loginUser)
     {
         var response = await _authenticationService.Login(loginUser);
+
+        if (ResponseHasErrors(response.ResponseResult)) return View(loginUser);
+
         await DoLogin(response);
         
         return RedirectToAction("Index", "Home");
