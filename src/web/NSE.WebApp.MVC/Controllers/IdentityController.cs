@@ -53,6 +53,7 @@ public class IdentityController : MainController
     [Route("logout")]
     public async Task<IActionResult> Logout()
     {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction("Index", "Home");
     }
 
