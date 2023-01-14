@@ -10,7 +10,8 @@ public static class WebAppConfig
     {
         if (!app.Environment.IsDevelopment())
         {
-            app.UseExceptionHandler("/Home/Error");
+            app.UseExceptionHandler("/error/500");
+            app.UseStatusCodePagesWithRedirects("/erro/{0}");
             app.UseHsts();
         }
 
@@ -20,6 +21,8 @@ public static class WebAppConfig
         app.UseRouting();
 
         app.UseIdentityConfiguration();
+
+        app.UseMiddleware<ExceptionMiddleware>();
 
         app.MapControllerRoute(
             name: "default",

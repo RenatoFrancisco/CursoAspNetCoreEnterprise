@@ -41,7 +41,7 @@ public class AuthenticationService : Service, IAuthenticationService
             PropertyNameCaseInsensitive = true
         };
 
-        var response = await _httpclient.PostAsync("http://localhost:5226/api/auth/new-account", registerContent);
+        var response = await _httpclient.PostAsync("http://localhost:5226/api/identity/new-account", registerContent);
         if (!HandleResponseErrors(response))
         {
             return new LoginResponseUser
