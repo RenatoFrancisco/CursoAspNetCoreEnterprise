@@ -22,7 +22,7 @@ public class ExceptionMiddleware
     {
         if (httpResponseException.StatusCode == HttpStatusCode.Unauthorized)
         {
-            context.Response.Redirect("/login");
+            context.Response.Redirect($"/login?ReturnUrl={context.Request.Path}");
             return;
         }
 

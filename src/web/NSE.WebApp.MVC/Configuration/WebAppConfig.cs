@@ -8,12 +8,13 @@ public static class WebAppConfig
 
     public static void UseMvcConfiguration(this WebApplication app)
     {
-        if (!app.Environment.IsDevelopment())
-        {
-            app.UseExceptionHandler("/error/500");
-            app.UseStatusCodePagesWithRedirects("/erro/{0}");
-            app.UseHsts();
-        }
+        // if (!app.Environment.IsDevelopment())
+        // {
+        // }
+
+        app.UseExceptionHandler("/error/500");
+        app.UseStatusCodePagesWithRedirects("/error/{0}");
+        app.UseHsts();
 
         // app.UseHttpsRedirection();
         app.UseStaticFiles();

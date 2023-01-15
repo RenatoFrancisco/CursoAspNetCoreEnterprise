@@ -31,22 +31,29 @@ public class IdentityController : MainController
 
     [HttpGet]
     [Route("login")]
-    public IActionResult Login()
+    public IActionResult Login(string returnUrl = default)
     {
+        ViewData["ReturnUrl"] = returnUrl;
         return View();
     }
 
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Login(LoginUser loginUser)
+    public async Task<IActionResult> Login(LoginUser loginUser, string returnUrl = default)
     {
+        ViewData["ReturnUrl"] = returnUrl;
+        if (!ModelState.IsValid) return View(loginUser);
+
         var response = await _authenticationService.Login(loginUser);
 
         if (ResponseHasErrors(response.ResponseResult)) return View(loginUser);
 
         await DoLogin(response);
-        
-        return RedirectToAction("Index", "Home");
+
+        if (string.IsNullOrEmpty(returnUrl))
+            return RedirectToAction("Index", "Home");
+
+        return LocalRedirect(returnUrl);
     }
 
     [HttpGet]

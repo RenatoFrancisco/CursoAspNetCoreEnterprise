@@ -19,7 +19,7 @@ public class AuthController : MainController
     [HttpPost("new-account")]
     public async Task<ActionResult> Register(RegisterUser registerUser) 
     {
-        return new StatusCodeResult(401);
+        // return new StatusCodeResult(401);
 
         if (!ModelState.IsValid) return CustomResponse(ModelState);
 
