@@ -68,8 +68,10 @@ public class IdentityController : MainController
     {
         var token =  GetFormatedToken(response.AccessToken);
 
-        var claims = new List<Claim>();
-        claims.Add(new Claim("JWT", response.AccessToken));
+        var claims = new List<Claim>
+        {
+            new Claim("JWT", response.AccessToken)
+        };
         claims.AddRange(token.Claims);
 
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
