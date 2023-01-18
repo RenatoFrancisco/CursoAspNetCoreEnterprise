@@ -6,6 +6,7 @@ global using Microsoft.AspNetCore.Authentication;
 global using System.IdentityModel.Tokens.Jwt;
 global using NSE.WebApp.MVC.Configuration;
 global using System.Runtime.Serialization;
+global using Microsoft.Extensions.Options;
 global using NSE.WebApp.MVC.Extensions;
 global using Microsoft.AspNetCore.Mvc;
 global using System.Security.Claims;

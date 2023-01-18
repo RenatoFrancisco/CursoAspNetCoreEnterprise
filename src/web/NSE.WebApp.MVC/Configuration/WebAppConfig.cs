@@ -1,9 +1,23 @@
 namespace NSE.WebApp.MVC.Configuration;
 
 public static class WebAppConfig
-{    public static void AddMvcConfiguration(this IServiceCollection services)
+{    
+    public static void AddMvcConfiguration(this IServiceCollection services, 
+                                           ConfigurationManager configuration, 
+                                           WebApplicationBuilder builder)
     {
+        configuration
+            .SetBasePath(builder.Environment.ContentRootPath)
+            .AddJsonFile("appsettings.json", true, true)
+            .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
+            .AddEnvironmentVariables();
+
+        if (builder.Environment.IsDevelopment())
+            configuration.AddUserSecrets<Program>();
+
         services.AddControllersWithViews();
+
+        services.Configure<AppSettings>(configuration);
     }
 
     public static void UseMvcConfiguration(this WebApplication app)

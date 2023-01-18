@@ -2,7 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddIdentityConfiguration();
 
-builder.Services.AddMvcConfiguration();
+builder.Services.AddMvcConfiguration(builder.Configuration, builder);
 
 builder.Services.RegisterServices();
 
