@@ -11,6 +11,8 @@ builder.Services.AddDbContext<CatalogContext>(options =>
 
 builder.Services.AddControllers();
 
+builder.Services.AddJwtConfiguration(builder.Configuration);
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Total", builder =>
@@ -47,6 +49,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.UseCors();
+
+app.UseAuthConfiguration();
 
 app.MapControllers();
 

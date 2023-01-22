@@ -1,6 +1,3 @@
 ﻿namespace NSE.Core.DomainObjects;
 
-public interface IAggregateRoot
-{
-
-}
+public interface IAggregateRoot { }
