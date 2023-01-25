@@ -1,11 +1,4 @@
-﻿using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-
-namespace NSE.WebAPI.Core.Identity;
+﻿namespace NSE.WebAPI.Core.Identity;
 
 public static class JwtConfig
 {

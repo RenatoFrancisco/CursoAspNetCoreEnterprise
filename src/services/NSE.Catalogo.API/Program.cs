@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
@@ -31,10 +33,44 @@ builder.Services.AddSwaggerGen(options =>
         Title = $"NerdStore Enteprise Catalog API - {builder.Environment.EnvironmentName}",
         Description = "This API makes parts of the Course ASP.NET Core Enterprise Applications"
     });
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Enter the token JWT like this: Bearer {your token}",
+        Name = "Authorization",
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+     });
 });
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<CatalogContext>();
+
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+
+builder.Services.AddAuthorizationBuilder()
+  .AddPolicy("catalog", policy =>
+        policy
+            .RequireClaim("Catalog", "Read"));
+            
 
 var app = builder.Build();
 
@@ -46,8 +82,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseCors();
 
 app.UseAuthConfiguration();
@@ -55,9 +89,11 @@ app.UseAuthConfiguration();
 app.MapControllers();
 
 app.MapGet("catalog/products", (IProductRepository productRepository) =>
-    productRepository.GetAllAsync());
+    productRepository.GetAllAsync())
+    .AllowAnonymous();
 
 app.MapGet("catalog/products/{id:guid}", (IProductRepository productRepository, Guid id) =>
-    productRepository.GetAsync(id));
+    productRepository.GetAsync(id))
+    .RequireAuthorization("catalog");
 
 app.Run();

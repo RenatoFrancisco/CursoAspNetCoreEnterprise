@@ -1,0 +1,10 @@
+﻿global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.AspNetCore.Mvc.Filters;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using System.Security.Claims;
+global using System.Text;
