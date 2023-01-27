@@ -22,15 +22,14 @@ public static class WebAppConfig
 
     public static void UseMvcConfiguration(this WebApplication app)
     {
-        // if (!app.Environment.IsDevelopment())
-        // {
-        // }
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseExceptionHandler("/error/500");
+            app.UseStatusCodePagesWithRedirects("/error/{0}");
+            app.UseHsts();
+        }
 
-        app.UseExceptionHandler("/error/500");
-        app.UseStatusCodePagesWithRedirects("/error/{0}");
-        app.UseHsts();
-
-        // app.UseHttpsRedirection();
+        app.UseHttpsRedirection();
         app.UseStaticFiles();
 
         app.UseRouting();
@@ -41,7 +40,7 @@ public static class WebAppConfig
 
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+            pattern: "{controller=Catalog}/{action=Index}/{id?}");
 
         app.Run();
     }
