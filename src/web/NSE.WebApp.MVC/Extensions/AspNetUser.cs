@@ -14,6 +14,8 @@ public class AspNetUser : IUser
     public string GetUserEmail() =>
         IsAuthenticated() ? _accessor.HttpContext.User.GetUserEmail() : string.Empty;
 
+    public string GetUserToken() => IsAuthenticated() ? _accessor.HttpContext.User.GetUserToken() : string.Empty;
+
     public bool IsAuthenticated() => _accessor.HttpContext.User.Identity.IsAuthenticated;
 
     public bool HasRole(string role) => _accessor.HttpContext.User.IsInRole(role);

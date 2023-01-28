@@ -8,6 +8,8 @@ public interface IUser
 
     string GetUserEmail();
 
+    string GetUserToken();
+
     bool IsAuthenticated();
 
     bool HasRole(string role);
