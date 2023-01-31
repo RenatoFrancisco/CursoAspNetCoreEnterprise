@@ -93,7 +93,10 @@ app.MapGet("catalog/products", (IProductRepository productRepository) =>
     .AllowAnonymous();
 
 app.MapGet("catalog/products/{id:guid}", (IProductRepository productRepository, Guid id) =>
-    productRepository.GetAsync(id))
-    .RequireAuthorization("catalog");
+{
+    throw new Exception("Error!");
+    productRepository.GetAsync(id);
+}).RequireAuthorization("catalog");
+
 
 app.Run();
