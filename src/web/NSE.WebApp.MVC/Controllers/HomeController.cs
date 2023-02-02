@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-namespace NSE.WebApp.MVC.Controllers;
+﻿namespace NSE.WebApp.MVC.Controllers;
 
 public class HomeController : MainController
 {
+    [Route("home")]
+    public IActionResult Index() => View();
+
+
     [Route("unavailable")]
     public IActionResult Unavailable()
     {

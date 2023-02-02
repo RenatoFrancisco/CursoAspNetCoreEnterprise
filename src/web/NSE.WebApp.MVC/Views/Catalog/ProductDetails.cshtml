@@ -39,11 +39,11 @@
                         </div>
 
                         <div class="mb-3">
-                            <var class="price h4">Model.Value</var>
+                            <var class="price h4">@this.FormatCurrency(@Model.Value)</var>
                         </div>
 
                         <h5>@Model.Description</h5><br />
-                        <p> Model.AmountStock</p>
+                        <p> @this.StockMessage(@Model.AmountStock)</p>
 
                         <hr>
 

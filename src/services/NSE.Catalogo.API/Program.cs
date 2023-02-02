@@ -94,7 +94,7 @@ app.MapGet("catalog/products", (IProductRepository productRepository) =>
 
 app.MapGet("catalog/products/{id:guid}", (IProductRepository productRepository, Guid id) =>
 {
-    throw new Exception("Error!");
+    //throw new Exception("Error!");
     productRepository.GetAsync(id);
 }).RequireAuthorization("catalog");
 
