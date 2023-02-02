@@ -1,23 +1,22 @@
-﻿namespace NSE.WebApp.MVC.Controllers;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-public class HomeController : Controller
+namespace NSE.WebApp.MVC.Controllers;
+
+public class HomeController : MainController
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    [Route("unavailable")]
+    public IActionResult Unavailable()
     {
-        _logger = logger;
+        var modelError = new ErrorViewModel
+        {
+            Message = "The system is temporaly unavailable! It may occur due overload simultaneous users.",
+            Title = "Unavailable system!",
+            ErrorCode = 500
+        };
+
+        return View("Error", modelError);
     }
 
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
 
     [Route("error/{id:length(3,3)}")]
     public IActionResult Error(int id)
@@ -26,8 +25,8 @@ public class HomeController : Controller
 
         if (id == 500)
         {
-            modelErro.Message = "An error occurred while processing your request.! Try again later or contact our support team.";
-            modelErro.Title = "An error occurred !";
+            modelErro.Message = "An error occurred while processing your request! Try again later or contact our support team.";
+            modelErro.Title = "An error occurred!";
             modelErro.ErrorCode = id;
         }
         else if (id == 404)

@@ -16,6 +16,7 @@ global using System.Security.Claims;
 global using NSE.WebApp.MVC.Models;
 global using Polly.Extensions.Http;
 global using System.ComponentModel;
+global using Polly.CircuitBreaker;
 global using System.Text.Json;
 global using System.Text;
 global using System.Net;

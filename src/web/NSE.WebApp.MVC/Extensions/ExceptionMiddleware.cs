@@ -16,6 +16,10 @@ public class ExceptionMiddleware
         {
             HandleRequestExceptionAsync(httpContext, ex);
         }
+        catch (BrokenCircuitException ex)
+        {
+            HandleCircuitBreakerExceptionAsync(httpContext);
+        }
     }
 
     private static void HandleRequestExceptionAsync(HttpContext context, CustomHttpResponseException httpResponseException)
@@ -28,4 +32,6 @@ public class ExceptionMiddleware
 
         context.Response.StatusCode = (int) httpResponseException.StatusCode;
     }
+
+    private static void HandleCircuitBreakerExceptionAsync(HttpContext context) => context.Response.Redirect("/unavailable");
 }
