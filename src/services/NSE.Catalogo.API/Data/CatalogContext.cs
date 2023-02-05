@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NSE.Core.Data;
-
-namespace NSE.Catalogo.API.Data;
+﻿namespace NSE.Catalogo.API.Data;
 
 public class CatalogContext : DbContext, IUnitOfWork
 {

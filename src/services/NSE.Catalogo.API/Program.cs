@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
@@ -55,7 +53,7 @@ builder.Services.AddSwaggerGen(options =>
                     Id = "Bearer"
                 }
             },
-            new string[] {}
+            Array.Empty<string>()
         }
      });
 });
