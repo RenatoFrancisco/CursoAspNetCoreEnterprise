@@ -1,6 +1,6 @@
 ﻿namespace NSE.Core.Messages;
 
-public abstract class Command : Message
+public abstract class Command : Message, IRequest<ValidationResult>
 {
     public DateTime Timestamp { get; private set; }
 

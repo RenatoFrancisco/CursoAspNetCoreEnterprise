@@ -3,7 +3,7 @@
 public class RegisterCustomerCommand : Command
 {
     public Guid Id { get; private set; }
-    public string Nome { get; private set; }
+    public string Name { get; private set; }
     public string Email { get; private set; }
     public string Cpf { get; private set; }
 
@@ -11,7 +11,7 @@ public class RegisterCustomerCommand : Command
     {
         AggregateId = id;
         Id = id;
-        Nome = nome;
+        Name = nome;
         Email = email;
         Cpf = cpf;
     }

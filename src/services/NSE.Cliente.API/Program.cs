@@ -24,6 +24,11 @@ builder.Services.AddCors(options =>
 });
 
 
+builder.Services.AddScoped<IMediatorHandler, MediatorHandler>();
+builder.Services.AddScoped<IRequestHandler<RegisterCustomerCommand, ValidationResult>, CustomerCommandHandler>();
+
+builder.Services.AddMediatR(typeof(Program));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
