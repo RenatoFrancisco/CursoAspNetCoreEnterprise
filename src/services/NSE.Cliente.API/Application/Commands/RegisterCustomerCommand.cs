@@ -15,4 +15,10 @@ public class RegisterCustomerCommand : Command
         Email = email;
         Cpf = cpf;
     }
+
+    public override bool IsValid()
+    {
+        ValidationResult = new RegisterCustomerCommandValidator().Validate(this);
+        return ValidationResult.IsValid;
+    }
 }
