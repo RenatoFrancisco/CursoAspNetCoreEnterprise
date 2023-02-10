@@ -2,10 +2,9 @@
 
 public class CustomerCommandHandler : CommandHandler, IRequestHandler<RegisterCustomerCommand, ValidationResult>
 {
-    public void Handle(RegisterCustomerCommand message)
-    {
+    private readonly ICustomerRepository _customerRepository;
 
-    }
+    public CustomerCommandHandler(ICustomerRepository customerRepository) => _customerRepository = customerRepository;
 
     public async Task<ValidationResult> Handle(RegisterCustomerCommand message, CancellationToken cancellationToken)
     {
@@ -13,6 +12,15 @@ public class CustomerCommandHandler : CommandHandler, IRequestHandler<RegisterCu
 
         var customer = new Customer(message.Id, message.Name, message.Email, message.Cpf);
 
-        return message.ValidationResult;
+        var customerExists = await _customerRepository.FindByCpfAsync(message.Cpf);
+        if (customerExists is not null) 
+        {
+            AddError("This cpf is already in use");
+            return ValidationResult;
+        }
+
+        _customerRepository.Add(customer);
+
+        return await PersistDataAsync(_customerRepository.UnitOfWork);
     }
 }

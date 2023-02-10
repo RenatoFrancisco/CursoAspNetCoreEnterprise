@@ -27,6 +27,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IMediatorHandler, MediatorHandler>();
 builder.Services.AddScoped<IRequestHandler<RegisterCustomerCommand, ValidationResult>, CustomerCommandHandler>();
 
+builder.Services.AddScoped<CustomersContext>();
+builder.Services.AddScoped<ICustomerRepository, ICustomerRepository>();
+
 builder.Services.AddMediatR(typeof(Program));
 
 builder.Services.AddEndpointsApiExplorer();

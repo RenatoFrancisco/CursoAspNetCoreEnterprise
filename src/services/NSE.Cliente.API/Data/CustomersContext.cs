@@ -8,7 +8,7 @@ public class CustomersContext : DbContext, IUnitOfWork
         ChangeTracker.AutoDetectChangesEnabled= true;
     }
 
-    public DbSet<Customer> Products { get; set; }
+    public DbSet<Customer> Customers { get; set; }
     public DbSet<Address> Adresses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
