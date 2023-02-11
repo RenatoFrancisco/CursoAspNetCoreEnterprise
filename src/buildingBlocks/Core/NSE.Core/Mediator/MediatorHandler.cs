@@ -9,6 +9,6 @@ public class MediatorHandler : IMediatorHandler
     public async Task<ValidationResult> SendCommand<T>(T command) where T : Command =>
         await _mediator.Send(command);
 
-    public async Task PublishEvent<T>(T @event) where T : Event => 
+    public async Task PublishEventAsync<T>(T @event) where T : Event => 
         await _mediator.Publish(@event);
 }

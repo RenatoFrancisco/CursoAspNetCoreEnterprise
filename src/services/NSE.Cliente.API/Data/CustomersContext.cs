@@ -1,11 +1,18 @@
-﻿namespace NSE.Cliente.API.Data;
+﻿using NSE.Cliente.API.Extensions;
+using NSE.Core.Mediator;
+
+namespace NSE.Cliente.API.Data;
 
 public class CustomersContext : DbContext, IUnitOfWork
 {
-    public CustomersContext(DbContextOptions<CustomersContext> options) : base(options) 
+    private readonly IMediatorHandler _mediator;
+
+    public CustomersContext(DbContextOptions<CustomersContext> options, IMediatorHandler mediator) : base(options)
     {
         ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTrackingWithIdentityResolution;
-        ChangeTracker.AutoDetectChangesEnabled= true;
+        ChangeTracker.AutoDetectChangesEnabled = true;
+
+        _mediator = mediator;
     }
 
     public DbSet<Customer> Customers { get; set; }
@@ -24,5 +31,11 @@ public class CustomersContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomersContext).Assembly);
     }
 
-    public async Task<bool> CommitAsync() => await base.SaveChangesAsync() > 0;
+    public async Task<bool> CommitAsync()
+    {
+        var success = await base.SaveChangesAsync() > 0;
+        if (success) await _mediator.PublishEventsAsync(this);
+
+        return success;
+    }
 }

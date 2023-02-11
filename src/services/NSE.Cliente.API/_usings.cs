@@ -1,6 +1,7 @@
 ﻿global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using NSE.Cliente.API.Application.Commands.Validators;
 global using NSE.Cliente.API.Application.Commands;
+global using NSE.Cliente.API.Application.Events;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.OpenApi.Models;
 global using FluentValidation.Results;

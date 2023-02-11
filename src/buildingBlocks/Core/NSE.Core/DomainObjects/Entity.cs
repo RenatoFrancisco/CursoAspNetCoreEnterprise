@@ -4,11 +4,23 @@ public abstract class Entity
 {
     public Guid Id { get; set; }
 
-    protected Entity()
+    protected Entity() => Id = Guid.NewGuid();
+
+    private List<Event> _notifications;
+    public IReadOnlyCollection<Event> Notifications => _notifications?.AsReadOnly();
+
+    public void AddEvent(Event e)
     {
-        Id = Guid.NewGuid();
+        _notifications = _notifications ?? new List<Event>();
+        _notifications.Add(e);
     }
 
+    public void RemoveEvent(Event e) => _notifications?.Remove(e);
+
+    public void ClearEvents() => _notifications?.Clear();
+
+
+    #region Comparisons
     public override bool Equals(object obj)
     {
         var compareTo = obj as Entity;
@@ -43,5 +55,6 @@ public abstract class Entity
     public override string ToString()
     {
         return $"{GetType().Name} [Id={Id}]";
-    }
+    } 
+    #endregion
 }

@@ -30,6 +30,8 @@ builder.Services.AddScoped<IRequestHandler<RegisterCustomerCommand, ValidationRe
 builder.Services.AddScoped<CustomersContext>();
 builder.Services.AddScoped<ICustomerRepository, ICustomerRepository>();
 
+builder.Services.AddScoped<INotificationHandler<RegisteredCustomerEvent>, CustomerEventHandler>();
+
 builder.Services.AddMediatR(typeof(Program));
 
 builder.Services.AddEndpointsApiExplorer();

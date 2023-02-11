@@ -21,6 +21,8 @@ public class CustomerCommandHandler : CommandHandler, IRequestHandler<RegisterCu
 
         _customerRepository.Add(customer);
 
+        customer.AddEvent(new RegisteredCustomerEvent(message.Id, message.Name, message.Email, message.Cpf));
+
         return await PersistDataAsync(_customerRepository.UnitOfWork);
     }
 }
