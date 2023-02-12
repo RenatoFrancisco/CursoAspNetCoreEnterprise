@@ -1,4 +1,6 @@
-﻿namespace NSE.Catalogo.API.Data;
+﻿using FluentValidation.Results;
+
+namespace NSE.Catalogo.API.Data;
 
 public class CatalogContext : DbContext, IUnitOfWork
 {
@@ -8,6 +10,9 @@ public class CatalogContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Ignore<ValidationResult>();
+        modelBuilder.Ignore<Event>();
+
         foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
             x => x.GetProperties().Where(p => p.ClrType == typeof(string))))
             property.SetColumnType("varchar(100)");    

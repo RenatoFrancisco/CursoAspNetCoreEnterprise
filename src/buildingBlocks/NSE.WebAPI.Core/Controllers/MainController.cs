@@ -1,4 +1,4 @@
-namespace NSE.Identidade.API.Controllers;
+﻿namespace NSE.WebAPI.Core.Controllers;
 
 [ApiController]
 public abstract class MainController : Controller
@@ -18,8 +18,16 @@ public abstract class MainController : Controller
 
     protected ActionResult CustomResponse(ModelStateDictionary modelState)
     {
-        var errors =  modelState.Values.SelectMany(e => e.Errors).ToList();
+        var errors = modelState.Values.SelectMany(e => e.Errors).ToList();
         errors.ForEach(e => AddError(e.ErrorMessage));
+
+        return CustomResponse();
+    }
+
+    protected ActionResult CustomResponse(ValidationResult validationResult)
+    {
+        validationResult.Errors
+            .ForEach(e => AddError(e.ErrorMessage));
 
         return CustomResponse();
     }

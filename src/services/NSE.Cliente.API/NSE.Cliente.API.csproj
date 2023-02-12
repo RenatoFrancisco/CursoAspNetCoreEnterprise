@@ -22,7 +22,6 @@
   <ItemGroup>
     <Folder Include="Application\Queries\" />
     <Folder Include="Configuration\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
   <ItemGroup>

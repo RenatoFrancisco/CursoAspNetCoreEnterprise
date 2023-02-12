@@ -1,3 +1,5 @@
+using NSE.Cliente.API.Data.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
@@ -28,7 +30,7 @@ builder.Services.AddScoped<IMediatorHandler, MediatorHandler>();
 builder.Services.AddScoped<IRequestHandler<RegisterCustomerCommand, ValidationResult>, CustomerCommandHandler>();
 
 builder.Services.AddScoped<CustomersContext>();
-builder.Services.AddScoped<ICustomerRepository, ICustomerRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRespository>();
 
 builder.Services.AddScoped<INotificationHandler<RegisteredCustomerEvent>, CustomerEventHandler>();
 

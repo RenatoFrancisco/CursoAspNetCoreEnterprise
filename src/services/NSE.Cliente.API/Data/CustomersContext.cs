@@ -1,7 +1,4 @@
-﻿using NSE.Cliente.API.Extensions;
-using NSE.Core.Mediator;
-
-namespace NSE.Cliente.API.Data;
+﻿namespace NSE.Cliente.API.Data;
 
 public class CustomersContext : DbContext, IUnitOfWork
 {
@@ -20,6 +17,9 @@ public class CustomersContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Ignore<ValidationResult>();
+        modelBuilder.Ignore<Event>();
+
         foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
             x => x.GetProperties().Where(p => p.ClrType == typeof(string))))
             property.SetColumnType("varchar(100)");
