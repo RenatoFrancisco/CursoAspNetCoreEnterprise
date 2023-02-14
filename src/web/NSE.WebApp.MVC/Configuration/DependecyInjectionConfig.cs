@@ -4,6 +4,7 @@ public static class DependecyInjectionConfig
 {
     public static void RegisterServices(this IServiceCollection services)
     {
+        services.AddSingleton<IValidationAttributeAdapterProvider, CpfValidationAttributeAdapterProvider>();
         services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
         services.AddHttpClient<IAuthenticationService, AuthenticationService>();
