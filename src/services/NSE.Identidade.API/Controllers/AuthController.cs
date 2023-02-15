@@ -1,3 +1,9 @@
+
+
+
+
+using EasyNetQ;
+
 namespace NSE.Identidade.API.Controllers;
 
 [Route("api/identity")]
@@ -7,13 +13,17 @@ public class AuthController : MainController
     private readonly UserManager<IdentityUser> _userManager;
     private readonly AppSettings _appSettings;
 
+    private IBus _bus;
+
     public AuthController(SignInManager<IdentityUser> signInManager,
                           UserManager<IdentityUser> userManager,
-                          IOptions<AppSettings> appSettings)
+                          IOptions<AppSettings> appSettings,
+                          IBus bus)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _appSettings = appSettings.Value;
+        _bus = bus;
     }
 
     [HttpPost("new-account")]
@@ -30,13 +40,30 @@ public class AuthController : MainController
 
         var result = await _userManager.CreateAsync(user, registerUser.Password);
         if (result.Succeeded)
+        {
+            var success = await RegisterCustomerAsync(registerUser);
             return CustomResponse(await GenerateJwt(user.Email));
+        }
 
         result.Errors
             .ToList()
             .ForEach(e => AddError(e.Description));
 
         return CustomResponse();
+    }
+
+    private async Task<ResponseMessage> RegisterCustomerAsync(RegisterUser registerUser)
+    {
+        var user = await _userManager.FindByEmailAsync(registerUser.Email);
+
+        var registeredUser = new RegisteredUserIntegrationEvent(
+            Guid.Parse(user.Id), registerUser.Name, registerUser.Email, registerUser.Cpf);
+
+        _bus = RabbitHutch.CreateBus("host=localhost:5672");
+
+        var success = await _bus.Rpc.RequestAsync<RegisteredUserIntegrationEvent, ResponseMessage>(registeredUser);
+
+        return success;
     }
 
     [HttpPost("authenticate")]

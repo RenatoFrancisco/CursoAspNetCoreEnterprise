@@ -6,6 +6,7 @@ global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.Extensions.Options;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Identity;
+global using NSE.Core.Messages.Integration;
 global using NSE.WebAPI.Core.Controllers;
 global using NSE.Identidade.API.Models;
 global using Microsoft.AspNetCore.Mvc;
