@@ -15,3 +15,5 @@ global using Microsoft.OpenApi.Models;
 global using NSE.Identidade.API.Data;
 global using System.Security.Claims;
 global using System.Text;
+global using EasyNetQ;
+

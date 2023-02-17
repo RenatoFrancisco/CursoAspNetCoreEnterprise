@@ -2,7 +2,10 @@
 global using NSE.Cliente.API.Application.Commands.Validators;
 global using NSE.Cliente.API.Application.Commands;
 global using NSE.Cliente.API.Application.Events;
+global using NSE.Cliente.API.Data.Repositories;
+global using NSE.Cliente.API.Services;
 global using Microsoft.EntityFrameworkCore;
+global using NSE.Core.Messages.Integration;
 global using NSE.WebAPI.Core.Controllers;
 global using NSE.Cliente.API.Extensions;
 global using Microsoft.OpenApi.Models;
@@ -16,4 +19,5 @@ global using NSE.Core.Messages;
 global using NSE.Core.Mediator;
 global using FluentValidation;
 global using NSE.Core.Data;
+global using EasyNetQ;
 global using MediatR;

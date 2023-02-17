@@ -1,5 +1,3 @@
-using NSE.Cliente.API.Data.Repositories;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
@@ -35,6 +33,8 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRespository>();
 builder.Services.AddScoped<INotificationHandler<RegisteredCustomerEvent>, CustomerEventHandler>();
 
 builder.Services.AddMediatR(typeof(Program));
+
+builder.Services.AddHostedService<CustomerRegisterIntegrationHandler>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
