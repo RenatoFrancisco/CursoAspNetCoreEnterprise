@@ -1,5 +1,3 @@
-using NSE.WebAPI.Core.Identity;
-
 namespace NSE.Identidade.API.Configuration;
 
 public static class ApiConfig
@@ -28,7 +26,7 @@ public static class ApiConfig
         if (app.Environment.IsDevelopment())
             app.UseDeveloperExceptionPage();
 
-        // app.UseHttpsRedirection();
+        app.UseHttpsRedirection();
 
         app.UseAuthConfiguration();
 

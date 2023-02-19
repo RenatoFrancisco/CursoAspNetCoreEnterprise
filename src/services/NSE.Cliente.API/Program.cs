@@ -1,3 +1,5 @@
+using NSE.Cliente.API.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
@@ -34,7 +36,7 @@ builder.Services.AddScoped<INotificationHandler<RegisteredCustomerEvent>, Custom
 
 builder.Services.AddMediatR(typeof(Program));
 
-builder.Services.AddHostedService<CustomerRegisterIntegrationHandler>();
+builder.Services.AddMessageBusConfiguration(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

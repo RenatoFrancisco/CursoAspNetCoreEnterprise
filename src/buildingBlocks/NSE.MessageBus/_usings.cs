@@ -1,4 +1,5 @@
-﻿global using NSE.Core.Messages.Integration;
+﻿global using Microsoft.Extensions.DependencyInjection;
+global using NSE.Core.Messages.Integration;
 global using RabbitMQ.Client.Exceptions;
 global using EasyNetQ.Internals;
 global using EasyNetQ;

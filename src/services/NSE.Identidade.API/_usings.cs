@@ -14,6 +14,8 @@ global using NSE.WebAPI.Core.Identity;
 global using Microsoft.OpenApi.Models;
 global using NSE.Identidade.API.Data;
 global using System.Security.Claims;
+global using NSE.Core.Utils;
+global using NSE.MessageBus;
 global using System.Text;
 global using EasyNetQ;
 

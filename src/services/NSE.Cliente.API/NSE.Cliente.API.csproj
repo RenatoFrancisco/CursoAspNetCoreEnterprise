@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EasyNetQ" Version="7.4.3" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.1" />
@@ -22,11 +21,11 @@
 
   <ItemGroup>
     <Folder Include="Application\Queries\" />
-    <Folder Include="Configuration\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\buildingBlocks\Core\NSE.Core\NSE.Core.csproj" />
+    <ProjectReference Include="..\..\buildingBlocks\NSE.MessageBus\NSE.MessageBus.csproj" />
     <ProjectReference Include="..\..\buildingBlocks\NSE.WebAPI.Core\NSE.WebAPI.Core.csproj" />
   </ItemGroup>
 
