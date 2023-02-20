@@ -2,26 +2,23 @@
 
 public class CustomerRegisterIntegrationHandler : BackgroundService
 {
-    private IBus _bus;
-
     private readonly IServiceProvider _serviceProvider;
+    private readonly IMessageBus _bus;
 
-    public CustomerRegisterIntegrationHandler(IServiceProvider serviceProvider)
+    public CustomerRegisterIntegrationHandler(IServiceProvider serviceProvider, IMessageBus bus)
     {
         _serviceProvider = serviceProvider;
+        _bus = bus;
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _bus = RabbitHutch.CreateBus("host=localhost:5672");
-
-        _bus.Rpc.RespondAsync<RegisteredUserIntegrationEvent, ResponseMessage>(async request => 
-            new ResponseMessage(await RegisterCustomer(request)));
+        _bus.RespondAsync<RegisteredUserIntegrationEvent, ResponseMessage>(async request => await RegisterCustomer(request));
 
         return Task.CompletedTask;
     }
 
-    private async Task<ValidationResult> RegisterCustomer(RegisteredUserIntegrationEvent message)
+    private async Task<ResponseMessage> RegisterCustomer(RegisteredUserIntegrationEvent message)
     {
         var customerCommand = new RegisterCustomerCommand(message.Id, message.Name, message.Email, message.Cpf);
 
@@ -29,6 +26,6 @@ public class CustomerRegisterIntegrationHandler : BackgroundService
         var mediator = scope.ServiceProvider.GetRequiredService<IMediatorHandler>();
         var success = await mediator.SendCommand(customerCommand);
 
-        return success;
+        return new ResponseMessage(success);
     }
 }

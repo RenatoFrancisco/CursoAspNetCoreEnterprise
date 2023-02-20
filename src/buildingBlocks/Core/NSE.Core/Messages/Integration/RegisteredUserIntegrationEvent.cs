@@ -1,6 +1,6 @@
 ﻿namespace NSE.Core.Messages.Integration;
 
-public class RegisteredUserIntegrationEvent
+public class RegisteredUserIntegrationEvent : IntegrationEvent
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; }
