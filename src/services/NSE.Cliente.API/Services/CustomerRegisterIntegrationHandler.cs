@@ -13,10 +13,18 @@ public class CustomerRegisterIntegrationHandler : BackgroundService
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _bus.RespondAsync<RegisteredUserIntegrationEvent, ResponseMessage>(async request => await RegisterCustomer(request));
-
+        SetResponder();
         return Task.CompletedTask;
     }
+
+    private void SetResponder()
+    {
+        _bus.RespondAsync<RegisteredUserIntegrationEvent, ResponseMessage>(async request => await RegisterCustomer(request));
+        _bus.AdvancedBus.Connected += OnConnect;
+    }
+
+    private void OnConnect(object s, ConnectedEventArgs e) => SetResponder();
+
 
     private async Task<ResponseMessage> RegisterCustomer(RegisteredUserIntegrationEvent message)
     {
