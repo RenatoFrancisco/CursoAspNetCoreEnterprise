@@ -17,5 +17,3 @@ global using System.Security.Claims;
 global using NSE.Core.Utils;
 global using NSE.MessageBus;
 global using System.Text;
-global using EasyNetQ;
-
