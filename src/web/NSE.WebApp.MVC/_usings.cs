@@ -25,6 +25,7 @@ global using Polly.Extensions.Http;
 global using System.ComponentModel;
 global using Polly.CircuitBreaker;
 global using System.Globalization;
+global using NSE.WebAPI.Core.User;
 global using System.Text.Json;
 global using System.Text;
 global using System.Net;

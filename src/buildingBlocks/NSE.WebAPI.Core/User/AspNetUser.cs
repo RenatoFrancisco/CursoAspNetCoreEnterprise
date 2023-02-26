@@ -1,6 +1,6 @@
-namespace NSE.WebApp.MVC.Extensions;
+﻿namespace NSE.WebAPI.Core.User;
 
-public class AspNetUser : IUser
+public class AspNetUser : IAspNetUser
 {
     private readonly IHttpContextAccessor _accessor;
 

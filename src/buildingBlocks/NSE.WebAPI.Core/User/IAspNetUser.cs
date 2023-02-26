@@ -1,6 +1,6 @@
-namespace NSE.WebApp.MVC.Extensions;
+namespace NSE.WebAPI.Core.User;
 
-public interface IUser
+public interface IAspNetUser
 {
     string Name { get; }
 

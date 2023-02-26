@@ -2,9 +2,9 @@
 
 public class HttpClientAuthorizationDelegatingHandler : DelegatingHandler
 {
-    private readonly IUser _user;
+    private readonly IAspNetUser _user;
 
-    public HttpClientAuthorizationDelegatingHandler(IUser user) => _user = user;
+    public HttpClientAuthorizationDelegatingHandler(IAspNetUser user) => _user = user;
 
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {

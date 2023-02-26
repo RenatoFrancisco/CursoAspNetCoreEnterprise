@@ -1,4 +1,4 @@
-namespace NSE.WebApp.MVC.Extensions;
+namespace NSE.WebAPI.Core.User;
 
 public static class ClaimsPrincipalExtensions
 {

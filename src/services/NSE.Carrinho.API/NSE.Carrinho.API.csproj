@@ -18,10 +18,6 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <ProjectReference Include="..\..\buildingBlocks\NSE.WebAPI.Core\NSE.WebAPI.Core.csproj" />

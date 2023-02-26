@@ -30,6 +30,6 @@ public static class DependecyInjectionConfig
             .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.AddScoped<IUser, AspNetUser>();
+        services.AddScoped<IAspNetUser, AspNetUser>();
     }
 }
