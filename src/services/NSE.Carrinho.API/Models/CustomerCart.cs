@@ -10,7 +10,7 @@ public class CustomerCart
     public List<ItemCart> Items { get; set; } = new List<ItemCart>();
     public ValidationResult ValidationResult { get; set; }
 
-    public bool usedVoucher { get; set; }
+    public bool UsedVoucher { get; set; }
     public decimal Discount { get; set; }
 
     public Voucher Voucher { get; set; }
@@ -26,7 +26,7 @@ public class CustomerCart
     public void ApplyVoucher(Voucher voucher)
     {
         Voucher = voucher;
-        usedVoucher = true;
+        UsedVoucher = true;
         CalculateCartValue();
     }
 
@@ -38,7 +38,7 @@ public class CustomerCart
 
     private void CalculateTotalDiscountValue()
     {
-        if (!usedVoucher) return;
+        if (!UsedVoucher) return;
 
         decimal discount = 0;
         var value = TotalValue;
@@ -65,7 +65,6 @@ public class CustomerCart
     }
 
     internal bool ExistentItemCart(ItemCart item) => Items.Any(p => p.ProductId == item.ProductId);
-
 
     internal ItemCart GetByProductId(Guid produtoId) =>  Items.FirstOrDefault(p => p.ProductId == produtoId);
 
@@ -118,7 +117,6 @@ public class CustomerCart
 
         return ValidationResult.IsValid;
     }
-
     public class CustomerCartalidation : AbstractValidator<CustomerCart>
     {
         public CustomerCartalidation()

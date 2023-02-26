@@ -9,7 +9,7 @@ public sealed class CartContext : DbContext
         ChangeTracker.AutoDetectChangesEnabled = false;
     }
 
-    public DbSet<ItemCart> ItensCart { get; set; }
+    public DbSet<ItemCart> ItemsCart { get; set; }
     public DbSet<CustomerCart> CustomerCart { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,7 +22,7 @@ public sealed class CartContext : DbContext
 
         modelBuilder.Entity<CustomerCart>()
             .HasIndex(c => c.CustomerId)
-            .HasName("IDX_Cliente");
+            .HasDatabaseName("IDX_Cliente");
 
         modelBuilder.Entity<CustomerCart>()
             .Ignore(c => c.Voucher)
