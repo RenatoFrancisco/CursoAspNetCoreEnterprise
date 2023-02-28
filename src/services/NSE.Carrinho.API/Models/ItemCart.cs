@@ -19,9 +19,9 @@ public class ItemCart
 
     internal decimal CalculateValue() => Amount * Value;
 
-    internal void AddUnits(int unidades) => Amount += unidades;
+    internal void AddUnits(int units) => Amount += units;
 
-    internal void UpdateUnits(int unidades) => Amount = unidades;
+    internal void UpdateUnits(int units) => Amount = units;
 
     internal bool IsValid() => new ItemCartValidation().Validate(this).IsValid;
 
