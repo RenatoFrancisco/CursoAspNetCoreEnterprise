@@ -87,8 +87,6 @@ public class CustomerCart
 
     internal void UpdateItem(ItemCart item)
     {
-        if (!item.IsValid()) return;
-
         item.AssociateCart(Id);
 
         var itemExistente = GetByProductId(item.ProductId);
@@ -125,11 +123,11 @@ public class CustomerCart
         {
             RuleFor(c => c.CustomerId)
                 .NotEqual(Guid.Empty)
-                .WithMessage("Customer uknown");
+                .WithMessage("Customer unknown");
 
             RuleFor(c => c.Items.Count)
                 .GreaterThan(0)
-                .WithMessage("The cart does not have itens");
+                .WithMessage("The cart does not have items");
 
             RuleFor(c => c.TotalValue)
                 .GreaterThan(0)

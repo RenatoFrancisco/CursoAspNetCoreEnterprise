@@ -24,6 +24,7 @@ public class CartController : MainController
         else
             HandleExistentCart(cart, item);
 
+        ValidateCart(cart);
         if (!IsValidOperation) return CustomResponse();
 
         await PersistAsync();
@@ -38,6 +39,9 @@ public class CartController : MainController
         if (itemCart is null) return CustomResponse();
 
         cart.UpdateUnits(itemCart, item.Amount);
+
+        ValidateCart(cart);
+        if (!IsValidOperation) return CustomResponse();
 
         _context.ItemsCart.Update(itemCart);
         _context.CustomerCart.Update(cart);
@@ -54,6 +58,9 @@ public class CartController : MainController
         if (itemCart is null) return CustomResponse();
 
         cart.RemoveItem(itemCart);
+
+        ValidateCart(cart);
+        if (!IsValidOperation) return CustomResponse();
 
         _context.ItemsCart.Remove(itemCart);
         _context.CustomerCart.Update(cart);
@@ -119,5 +126,15 @@ public class CartController : MainController
     {
         var result = await _context.SaveChangesAsync();
         if (result <= 0) AddError("Ocurred an error while persisting into database");
+    }
+
+    private bool ValidateCart(CustomerCart cart)
+    {
+        if (cart.IsValid()) return true;
+
+        cart.ValidationResult.Errors.ToList()
+            .ForEach(e => AddError(e.ErrorMessage));
+
+        return false;
     }
 }
