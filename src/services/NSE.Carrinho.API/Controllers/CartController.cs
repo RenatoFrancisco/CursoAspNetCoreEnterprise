@@ -26,9 +26,39 @@ public class CartController : MainController
 
         if (!IsValidOperation) return CustomResponse();
 
-        var result = await _context.SaveChangesAsync();
-        if (result <= 0) AddError("Ocurred an error while persisting into database");
+        await PersistAsync();
+        return CustomResponse();
+    }
 
+    [HttpPut("cart/{productId:guid}")]
+    public async Task<IActionResult> UpdateItemCart(Guid productId, ItemCart item)
+    {
+        var cart = await GetCustomerCartAsync();
+        var itemCart = await GetValidatedItemCartAsync(productId, cart, item);
+        if (itemCart is null) return CustomResponse();
+
+        cart.UpdateUnits(itemCart, item.Amount);
+
+        _context.ItemsCart.Update(itemCart);
+        _context.CustomerCart.Update(cart);
+
+        await PersistAsync();
+        return CustomResponse();
+    }
+
+    [HttpPut("cart/{productId:guid}")]
+    public async Task<IActionResult> RemoveItemCart(Guid productId)
+    {
+        var cart = await GetCustomerCartAsync();
+        var itemCart = await GetValidatedItemCartAsync(productId, cart);
+        if (itemCart is null) return CustomResponse();
+
+        cart.RemoveItem(itemCart);
+
+        _context.ItemsCart.Remove(itemCart);
+        _context.CustomerCart.Update(cart);
+
+        await PersistAsync();
         return CustomResponse();
     }
 
@@ -54,20 +84,40 @@ public class CartController : MainController
         _context.CustomerCart.Update(cart);
     }
 
-    [HttpPut("cart/{productId:guid}")]
-    public async Task<IActionResult> UpdateItemCart(Guid productId, ItemCart item)
-    {
-        return CustomResponse();
-    }
-
-    [HttpPut("cart/{productId:guid}")]
-    public async Task<IActionResult> RemoveItemCart(Guid productId)
-    {
-        return CustomResponse();
-    }
-
     private async Task<CustomerCart> GetCustomerCartAsync() =>
         await _context.CustomerCart
             .Include(c => c.Items)
             .FirstOrDefaultAsync(c => c.CustomerId == _user.GetUserId());
+
+    private async Task<ItemCart> GetValidatedItemCartAsync(Guid productId, CustomerCart cart, ItemCart item = null)
+    {
+        if (item is not null && productId != item.ProductId)
+        {
+            AddError("The item does not correspond with what was supplied");
+            return null;
+        }
+
+        if (cart is null)
+        {
+            AddError("Cart not found");
+            return null;
+        }
+
+        var itemCart = await _context.ItemsCart
+            .FirstOrDefaultAsync(i => i.CartId == cart.Id && i.ProductId ==  productId);
+
+        if (itemCart is null || !cart.ExistentItemCart(itemCart)) 
+        {
+            AddError("The item is not in cart");
+            return null;
+        }
+
+        return itemCart;
+    }
+
+    private async Task PersistAsync()
+    {
+        var result = await _context.SaveChangesAsync();
+        if (result <= 0) AddError("Ocurred an error while persisting into database");
+    }
 }

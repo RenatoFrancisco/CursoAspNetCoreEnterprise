@@ -87,6 +87,8 @@ public class CustomerCart
 
     internal void UpdateItem(ItemCart item)
     {
+        if (!item.IsValid()) return;
+
         item.AssociateCart(Id);
 
         var itemExistente = GetByProductId(item.ProductId);
