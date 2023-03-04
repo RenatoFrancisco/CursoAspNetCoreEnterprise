@@ -27,6 +27,7 @@ global using Polly.CircuitBreaker;
 global using System.Globalization;
 global using NSE.WebAPI.Core.User;
 global using System.Text.Json;
+global using Polly.Retry;
 global using System.Text;
 global using System.Net;
 global using Polly;

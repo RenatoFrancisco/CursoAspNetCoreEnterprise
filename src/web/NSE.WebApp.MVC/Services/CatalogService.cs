@@ -10,7 +10,7 @@ public class CatalogService : Service, ICatalogService
         _httpclient = httpclient;
     }
 
-    public async Task<IEnumerable<ProductViewModel>> GetAll()
+    public async Task<IEnumerable<ProductViewModel>> GetAllAsync()
     {
         var response = await _httpclient.GetAsync("catalog/products/");
         HandleResponseErrors(response);
@@ -18,7 +18,7 @@ public class CatalogService : Service, ICatalogService
         return await DeserializeResponseObject<IEnumerable<ProductViewModel>>(response);
     }
 
-    public async Task<ProductViewModel> Get(Guid id)
+    public async Task<ProductViewModel> GetAsync(Guid id)
     {
         var response = await _httpclient.GetAsync($"catalog/products/{id}");
         HandleResponseErrors(response);

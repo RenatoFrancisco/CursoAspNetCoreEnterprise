@@ -10,7 +10,7 @@ public class AuthenticationService : Service, IAuthenticationService
         _httpclient = httpclient;
     }
 
-    public async Task<LoginResponseUser> Login(LoginUser loginUser)
+    public async Task<LoginResponseUser> LoginAsync(LoginUser loginUser)
     {
         var loginContent = GetContent(loginUser);
 
@@ -26,7 +26,7 @@ public class AuthenticationService : Service, IAuthenticationService
         return await DeserializeResponseObject<LoginResponseUser>(response);
     }
 
-    public async Task<LoginResponseUser> Register(RegisterUser registerUser)
+    public async Task<LoginResponseUser> RegisterAsync(RegisterUser registerUser)
     {
         var registerContent = GetContent(registerUser);
 

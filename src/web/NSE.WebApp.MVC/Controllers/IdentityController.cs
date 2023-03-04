@@ -20,7 +20,7 @@ public class IdentityController : MainController
     [Route("new-account")]
     public async Task<ActionResult> Register(RegisterUser registerUser)
     {
-        var response = await _authenticationService.Register(registerUser);
+        var response = await _authenticationService.RegisterAsync(registerUser);
 
         if (ResponseHasErrors(response.ResponseResult)) return View(registerUser);
 
@@ -44,7 +44,7 @@ public class IdentityController : MainController
         ViewData["ReturnUrl"] = returnUrl;
         if (!ModelState.IsValid) return View(loginUser);
 
-        var response = await _authenticationService.Login(loginUser);
+        var response = await _authenticationService.LoginAsync(loginUser);
 
         if (ResponseHasErrors(response.ResponseResult)) return View(loginUser);
 

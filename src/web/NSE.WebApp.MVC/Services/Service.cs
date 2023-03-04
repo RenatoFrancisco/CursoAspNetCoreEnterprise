@@ -17,4 +17,6 @@ public abstract class Service
         var s when s >= 200 && s < 300 => true,
         _ => false
     };
+
+    protected ResponseResult ReturnsOk() => new ResponseResult();
 }

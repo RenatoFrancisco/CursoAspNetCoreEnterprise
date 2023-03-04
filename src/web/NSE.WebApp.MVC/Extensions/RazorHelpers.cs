@@ -21,4 +21,20 @@ public static class RazorHelpers
 
     public static string StockMessage(this RazorPage page, int quantidade) =>
         quantidade > 0 ? $"Only {quantidade} in stock!" : "Sold out!";
+
+    public static string UnitsPerProducts(this RazorPage page, int unidades) => 
+        unidades > 1 ? $"{unidades} unidades" : $"{unidades} unidade";
+
+    public static string SelectOptionsByAmount(this RazorPage page, int quantidade, int valorSelecionado = 0)
+    {
+        var sb = new StringBuilder();
+        for (var i = 1; i <= quantidade; i++)
+        {
+            var selected = "";
+            if (i == valorSelecionado) selected = "selected";
+            sb.Append($"<option {selected} value='{i}'>{i}</option>");
+        }
+
+        return sb.ToString();
+    }
 }

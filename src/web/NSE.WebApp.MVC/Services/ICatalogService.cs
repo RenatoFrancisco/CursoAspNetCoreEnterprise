@@ -2,7 +2,7 @@
 
 public interface ICatalogService
 {
-    Task<IEnumerable<ProductViewModel>> GetAll();
+    Task<IEnumerable<ProductViewModel>> GetAllAsync();
 
-    Task<ProductViewModel> Get(Guid id);
+    Task<ProductViewModel> GetAsync(Guid id);
 }

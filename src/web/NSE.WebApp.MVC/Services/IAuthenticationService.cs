@@ -2,6 +2,6 @@ namespace NSE.WebApp.MVC.Services;
 
 public interface IAuthenticationService
 {
-    Task<LoginResponseUser> Login(LoginUser loginUser);
-    Task<LoginResponseUser> Register(RegisterUser registerUser);
+    Task<LoginResponseUser> LoginAsync(LoginUser loginUser);
+    Task<LoginResponseUser> RegisterAsync(RegisterUser registerUser);
 }
