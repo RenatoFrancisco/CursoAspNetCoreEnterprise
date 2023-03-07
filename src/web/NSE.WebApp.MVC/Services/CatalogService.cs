@@ -18,7 +18,7 @@ public class CatalogService : Service, ICatalogService
         return await DeserializeResponseObject<IEnumerable<ProductViewModel>>(response);
     }
 
-    public async Task<ProductViewModel> GetAsync(Guid id)
+    public async Task<ProductViewModel> GetByIdAsync(Guid id)
     {
         var response = await _httpclient.GetAsync($"catalog/products/{id}");
         HandleResponseErrors(response);

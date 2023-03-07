@@ -22,7 +22,7 @@ public class CatalogController : MainController
     [Route("product-details/{id:guid}")]
     public async Task<IActionResult> ProductDetails(Guid id)
     {
-        var product = await _catalogService.GetAsync(id);
+        var product = await _catalogService.GetByIdAsync(id);
         return View(product);
     }
 }

@@ -11,8 +11,11 @@ public abstract class MainController : Controller
 
             return true;
         }
-        
 
         return false;
     }
+
+    protected void AddErrorValidation(string message) => ModelState.AddModelError(string.Empty, message);
+
+    protected bool IsValidOperation() => ModelState.ErrorCount == 0;
 }

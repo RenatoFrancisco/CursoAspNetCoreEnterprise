@@ -2,7 +2,7 @@
 
 public interface ICartService
 {
-    Task<CartViewModel> GetAllAsync();
+    Task<CartViewModel> GetAsync();
     Task<ResponseResult> AddItemCartAsync(ItemProductViewModel product);
     Task<ResponseResult> UpdateItemCartAsync(Guid productId, ItemProductViewModel product);
     Task<ResponseResult> RemoveItemCartAsync(Guid productId);

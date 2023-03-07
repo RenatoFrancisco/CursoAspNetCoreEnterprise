@@ -10,7 +10,7 @@ public class CartService : Service, ICartService
         _httpClient.BaseAddress = new Uri(settings.Value.CartUrl);
     }
 
-    public async Task<CartViewModel> GetAllAsync()
+    public async Task<CartViewModel> GetAsync()
     {
         var response = await _httpClient.GetAsync("/cart/");
         HandleResponseErrors(response);
