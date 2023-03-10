@@ -33,6 +33,11 @@ public static class ApiConfig
                         .AllowAnyHeader());
         });
 
+        services.AddAuthorizationBuilder()
+          .AddPolicy("catalog", policy =>
+                policy
+                    .RequireClaim("Catalog", "Read"));
+
         return services;
     }
 

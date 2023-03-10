@@ -1,6 +1,4 @@
-﻿using NSE.WebApp.MVC.Services;
-
-namespace NSE.WebApp.MVC.Controllers;
+﻿namespace NSE.WebApp.MVC.Controllers;
 
 public class CatalogController : MainController
 {

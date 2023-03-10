@@ -1,8 +1,12 @@
+using Microsoft.Extensions.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApiConfiguration(builder.Configuration, builder);
 
 builder.Services.AddSwaggerConfig(builder);
+
+builder.Services.AddJwtConfiguration(builder.Configuration);
 
 builder.Services.RegisterServices();
 

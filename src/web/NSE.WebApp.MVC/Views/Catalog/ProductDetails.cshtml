@@ -15,9 +15,9 @@
             </aside>
             <main class="col-md-6 border-left">
                 <article class="content-body">
-                    <form asp-controller="Cart" asp-action="AddCartItem" method="post">
+                    <form asp-controller="Cart" asp-action="AddItemCart" method="post">
 
-                        <input type="hidden" id="ProdutoId" name="ProdutoId" value="@Model.Id" />
+                        <input type="hidden" id="ProductId" name="ProductId" value="@Model.Id" />
 
                         <h2 class="title">@Model.Name</h2>
 
@@ -35,7 +35,7 @@
                                 </li>
                             </ul>
                             <small class="label-rating text-muted">132 avaliações</small>
-                            <small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> 154 peças vendidas</small>
+                            <small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> 154 itens sold</small>
                         </div>
 
                         <div class="mb-3">
@@ -43,12 +43,12 @@
                         </div>
 
                         <h5>@Model.Description</h5><br />
-                        <p> @this.StockMessage(@Model.AmountStock)</p>
+                        <p> @this.StockMessage(@Model.StockAmount)</p>
 
                         <hr>
 
                         @{
-                            if (Model.AmountStock > 0)
+                            if (Model.StockAmount > 0)
                             {
                                 <div class="form-row">
                                     <div class="form-group col-md flex-grow-0">

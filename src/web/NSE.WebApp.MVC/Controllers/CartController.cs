@@ -33,7 +33,7 @@ public class CartController : MainController
         return RedirectToAction("Index");
     }
 
-    [HttpPost]
+    [HttpPut]
     [Route("cart/update-item")]
     public async Task<IActionResult> UpdateItemCart(Guid productId, int amount)
     {
@@ -52,7 +52,7 @@ public class CartController : MainController
         return RedirectToAction("Index");
     }
 
-    [HttpPost]
+    [HttpDelete]
     [Route("cart/remove-item")]
     public async Task<IActionResult> RemoveItemCart(Guid productId)
     {
@@ -78,7 +78,7 @@ public class CartController : MainController
         if (amount < 1)
             AddErrorValidation($"Choose at least 1 unit of the product {product.Name}");
 
-        if (amount > product.AmountStock)
-            AddErrorValidation($"The product {product.Name} has {product.AmountStock} unit(s) in stock, you have chosen {amount}");
+        if (amount > product.StockAmount)
+            AddErrorValidation($"The product {product.Name} has {product.StockAmount} unit(s) in stock, you have chosen {amount}");
     }
 }

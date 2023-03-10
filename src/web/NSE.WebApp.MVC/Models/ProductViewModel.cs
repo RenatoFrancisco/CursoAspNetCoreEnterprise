@@ -9,5 +9,5 @@ public class ProductViewModel
     public decimal Value { get; set; }
     public DateTime RegisterDate { get; set; }
     public string Image { get; set; }
-    public int AmountStock { get; set; }
+    public int StockAmount { get; set; }
 }

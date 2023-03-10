@@ -50,31 +50,31 @@
                                                         <small class="text-muted"> @this.FormatCurrency(item.Value) cada</small>
                                                     </div>
                                                 </td>
-                                                <form method="post" asp-controller="Carrinho" asp-action="AtualizarItemCarrinho">
-                                                <td>
+                                                <form method="post" asp-controller="Cart" asp-action="UpdateItemCart">
+                                                    <td>
 
-                                                    <input type="hidden" id="ProductId" name="ProductId" value="@item.ProductId" />
+                                                        <input type="hidden" id="ProductId" name="ProductId" value="@item.ProductId" />
 
-                                                    <div class="text-left">
-                                                        <select id="Amount" name="Amount" style="width: 80px" class="form-control">
-                                                                @{
-                                                                    @Html.Raw(this.SelectOptionsByAmount(5, item.Amount))
-                                                                }
-                                                        </select>
-                                                    </div>
+                                                        <div class="text-left">
+                                                            <select id="Amount" name="Amount" style="width: 80px" class="form-control">
+                                                                    @{
+                                                                        @Html.Raw(this.SelectOptionsByAmount(5, item.Amount))
+                                                                    }
+                                                            </select>
+                                                        </div>
 
 
-                                                </td>
-                                                <td>
-                                                    <div class="text-right">
-                                                        <button type="submit" class="btn btn-success">
-                                                            <i class="fas fa-sync"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-right">
+                                                            <button type="submit" class="btn btn-success">
+                                                                <i class="fas fa-sync"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
                                                 </form>
                                                 <td>
-                                                    <form method="post" asp-controller="Cart" asp-action="RemoveItemCarrinho">
+                                                    <form method="post" asp-controller="Cart" asp-action="RemoveItemCart">
                                                         <div>
 
                                                             <input type="hidden" id="ProductId" name="ProductId" value="@item.ProductId" />
@@ -188,8 +188,8 @@
                                 </g>
                             </svg>
                             <br /><br />
-                            <h4>Seu carrinho está vazio</h4>
-                            <h5>Vá para a <a asp-controller="Catalogo">página inicial</a> e confira nossos carrinhos. <br />Quando encontrar um que goste clique no botão adicionar ao carrinho ;)</h5>
+                            <h4>Your Cart is empty</h4>
+                            <h5>Go <a asp-controller="Catalog"></a> and checkout our carts <br />When you find some cart that you like, click on Add button to add it ;)</h5>
                         </div>
                     </div>
                 </div>

@@ -24,7 +24,6 @@ public class CartController : MainController
         else
             HandleExistentCart(cart, item);
 
-        ValidateCart(cart);
         if (!IsValidOperation) return CustomResponse();
 
         await PersistAsync();
@@ -74,6 +73,7 @@ public class CartController : MainController
         var cart = new CustomerCart(_user.GetUserId());
         cart.AddItem(item);
 
+        ValidateCart(cart);
         _context.CustomerCart.Add(cart);
     }
 
@@ -82,6 +82,7 @@ public class CartController : MainController
         var existentProduct = cart.ExistentItemCart(item);
 
         cart.AddItem(item);
+        ValidateCart(cart);
 
         if (existentProduct)
             _context.ItemsCart.Update(cart.GetByProductId(item.ProductId));
