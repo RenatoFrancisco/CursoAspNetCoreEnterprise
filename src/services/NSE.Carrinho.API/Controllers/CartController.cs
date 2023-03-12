@@ -49,7 +49,7 @@ public class CartController : MainController
         return CustomResponse();
     }
 
-    [HttpPut("cart/{productId:guid}")]
+    [HttpDelete("cart/{productId:guid}")]
     public async Task<IActionResult> RemoveItemCart(Guid productId)
     {
         var cart = await GetCustomerCartAsync();

@@ -3,6 +3,10 @@
 
 @if (AppUser.IsAuthenticated())
 {
+    <div>
+        <vc:cart />
+    </div>
+
     <li class="nav-item">
         <a class="nav-link text-dark" title="Manage">Olá, @AppUser.GetUserEmail()</a>
       <a href="#" class="icontext dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

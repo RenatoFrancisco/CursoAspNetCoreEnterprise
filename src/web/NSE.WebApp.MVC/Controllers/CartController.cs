@@ -33,7 +33,7 @@ public class CartController : MainController
         return RedirectToAction("Index");
     }
 
-    [HttpPut]
+    [HttpPost]
     [Route("cart/update-item")]
     public async Task<IActionResult> UpdateItemCart(Guid productId, int amount)
     {
@@ -52,7 +52,7 @@ public class CartController : MainController
         return RedirectToAction("Index");
     }
 
-    [HttpDelete]
+    [HttpPost]
     [Route("cart/remove-item")]
     public async Task<IActionResult> RemoveItemCart(Guid productId)
     {

@@ -19,19 +19,19 @@ public static class RazorHelpers
     private static string FormatCurrency(decimal valor) => 
         string.Format(Thread.CurrentThread.CurrentCulture, "{0:C}", valor);
 
-    public static string StockMessage(this RazorPage page, int quantidade) =>
-        quantidade > 0 ? $"Only {quantidade} in stock!" : "Sold out!";
+    public static string StockMessage(this RazorPage page, int amount) =>
+        amount > 0 ? $"Only {amount} in stock!" : "Sold out!";
 
-    public static string UnitsPerProducts(this RazorPage page, int unidades) => 
-        unidades > 1 ? $"{unidades} unidades" : $"{unidades} unidade";
+    public static string UnitsPerProducts(this RazorPage page, int units) => 
+        units > 1 ? $"{units} units" : $"{units} unit";
 
-    public static string SelectOptionsByAmount(this RazorPage page, int quantidade, int valorSelecionado = 0)
+    public static string SelectOptionsByAmount(this RazorPage page, int amount, int selectedValue = 0)
     {
         var sb = new StringBuilder();
-        for (var i = 1; i <= quantidade; i++)
+        for (var i = 1; i <= amount; i++)
         {
             var selected = "";
-            if (i == valorSelecionado) selected = "selected";
+            if (i == selectedValue) selected = "selected";
             sb.Append($"<option {selected} value='{i}'>{i}</option>");
         }
 
