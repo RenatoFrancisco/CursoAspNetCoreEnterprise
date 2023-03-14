@@ -2,6 +2,15 @@
 
 public class CartController : MainController
 {
+    private readonly ICartService _cartService;
+    private readonly ICatalogService _catalogoService;
+
+    public CartController(ICartService cartService, ICatalogService catalogoService)
+    {
+        _cartService = cartService;
+        _catalogoService = catalogoService;
+    }
+
     [HttpGet]
     [Route("orders/cart")]
     public async Task<IActionResult> Index()

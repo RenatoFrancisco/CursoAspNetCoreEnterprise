@@ -1,8 +1,8 @@
 ﻿namespace NSE.Bff.Compras.Services;
 
-public interface ICatalogoService { }
+public interface ICatalogService { }
 
-public class CatalogService : Service, ICatalogoService
+public class CatalogService : Service, ICatalogService
 {
     private readonly HttpClient _httpClient;
 

@@ -20,6 +20,7 @@ global using NSE.WebApp.MVC.Services;
 global using System.Net.Http.Headers;
 global using System.Security.Claims;
 global using NSE.Core.DomainObjects;
+global using NSE.Core.Communication;
 global using NSE.WebApp.MVC.Models;
 global using Polly.Extensions.Http;
 global using System.ComponentModel;

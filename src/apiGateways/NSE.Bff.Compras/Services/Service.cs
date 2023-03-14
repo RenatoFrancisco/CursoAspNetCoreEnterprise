@@ -10,7 +10,7 @@ public abstract class Service
             "application/json");
     }
 
-    protected async Task<T> DeserializeObjetoResponse<T>(HttpResponseMessage responseMessage)
+    protected async Task<T> DeserializeResponseObject<T>(HttpResponseMessage responseMessage)
     {
         var options = new JsonSerializerOptions
         {
@@ -27,4 +27,7 @@ public abstract class Service
         response.EnsureSuccessStatusCode();
         return true;
     }
+
+    protected ResponseResult ReturnsOK() => new ResponseResult();
+
 }
