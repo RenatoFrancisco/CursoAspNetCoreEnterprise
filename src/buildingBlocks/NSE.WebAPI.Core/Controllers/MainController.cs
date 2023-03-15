@@ -32,6 +32,21 @@ public abstract class MainController : Controller
         return CustomResponse();
     }
 
+    protected ActionResult CustomResponse(ResponseResult response)
+    {
+        ResponseHasErrors(response);
+        return CustomResponse();
+    }
+
+    protected bool ResponseHasErrors(ResponseResult response)
+    {
+        if (response is null || !response.Errors.Messages.Any()) return false;
+
+        response.Errors.Messages.ForEach(AddError);
+
+        return true;
+    }
+
     protected void AddError(string error) => Errors.Add(error);
 
     protected void ClearErrors() => Errors.Clear();

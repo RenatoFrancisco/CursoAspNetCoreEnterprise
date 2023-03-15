@@ -9,4 +9,8 @@ global using Microsoft.AspNetCore.Http;
 global using FluentValidation.Results;
 global using Microsoft.AspNetCore.Mvc;
 global using System.Security.Claims;
+global using NSE.Core.Communication;
+global using Polly.Extensions.Http;
 global using System.Text;
+global using Polly.Retry;
+global using Polly;

@@ -2,7 +2,7 @@
 
 public interface ICartService 
 {
-    Task<CartDTO> Get();
+    Task<CartDTO> GetAsync();
     Task<ResponseResult> AddItemCart(ItemCartDTO product);
     Task<ResponseResult> UpdateItemCart(Guid productId, ItemCartDTO cart);
     Task<ResponseResult> RemoveItemCart(Guid productId);
@@ -18,7 +18,7 @@ public class CartService : Service, ICartService
         _httpClient.BaseAddress = new Uri(settings.Value.CartUrl);
     }
 
-    public async Task<CartDTO> Get()
+    public async Task<CartDTO> GetAsync()
     {
         var response = await _httpClient.GetAsync("/cart/");
 
