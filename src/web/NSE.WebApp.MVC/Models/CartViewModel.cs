@@ -6,5 +6,5 @@ public class CartViewModel
     public VoucherViewModel Voucher { get; set; }
     public bool UsedVoucher { get; set; }
     public decimal Discount { get; set; }
-    public List<ItemProductViewModel> Items { get; set; } = new List<ItemProductViewModel>();
+    public List<ItemCartViewModel> Items { get; set; } = new List<ItemCartViewModel>();
 }

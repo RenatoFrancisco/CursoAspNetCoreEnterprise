@@ -15,6 +15,8 @@ public static class ApiConfig
         if (builder.Environment.IsDevelopment())
             configuration.AddUserSecrets<Program>();
 
+        services.Configure<AppServicesSettings>(configuration);
+
         services.AddControllers()
             .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 

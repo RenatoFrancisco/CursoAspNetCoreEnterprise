@@ -2,33 +2,21 @@
 
 public class CartController : MainController
 {
-    private readonly ICartService _cartService;
-    private readonly ICatalogService _catalogService;
+    private readonly IOrdersBffService _ordersBffService;
 
-    public CartController(ICartService cartService, 
-                          ICatalogService catalogService)
-    {
-        _cartService = cartService;
-        _catalogService = catalogService;
-    }
+    public CartController(IOrdersBffService ordersBffService) => _ordersBffService = ordersBffService;
 
     [Route("cart")]
-    public async Task<IActionResult> Index() => View(await _cartService.GetAsync());
+    public async Task<IActionResult> Index() => View(await _ordersBffService.GetAsync());
 
     [HttpPost]
     [Route("cart/add-item")]
-    public async Task<IActionResult> AddItemCart(ItemProductViewModel itemProduct)
+    public async Task<IActionResult> AddItemCart(ItemCartViewModel itemProduct)
     {
-        var product = await _catalogService.GetByIdAsync(itemProduct.ProductId);
-        ValidateItemCart(product, itemProduct.Amount);
+        var response = await _ordersBffService.AddItemCartAsync(itemProduct);
 
-        itemProduct.Name = product.Name;
-        itemProduct.Value = product.Value;
-        itemProduct.Image = product.Image;
-
-        var response = await _cartService.AddItemCartAsync(itemProduct);
         if (ResponseHasErrors(response)) 
-            return View("Index", await _cartService.GetAsync());
+            return View("Index", await _ordersBffService.GetAsync());
 
         return RedirectToAction("Index");
     }
@@ -37,17 +25,11 @@ public class CartController : MainController
     [Route("cart/update-item")]
     public async Task<IActionResult> UpdateItemCart(Guid productId, int amount)
     {
-        var product = await _catalogService.GetByIdAsync(productId);
-        ValidateItemCart(product, amount);
+        var itemProduto = new ItemCartViewModel { ProductId = productId, Amount= amount };
+        var response = await _ordersBffService.UpdateItemCartAsync(productId, itemProduto);
 
-        if (!IsValidOperation())
-            return View("Index", await _cartService.GetAsync());
-
-        var itemProduto = new ItemProductViewModel { ProductId = productId, Amount= amount };
-
-        var response = await _cartService.UpdateItemCartAsync(productId, itemProduto);
         if (ResponseHasErrors(response))
-            return View("Index", await _cartService.GetAsync());
+            return View("Index", await _ordersBffService.GetAsync());
 
         return RedirectToAction("Index");
     }
@@ -56,29 +38,10 @@ public class CartController : MainController
     [Route("cart/remove-item")]
     public async Task<IActionResult> RemoveItemCart(Guid productId)
     {
-        var product = await _catalogService.GetByIdAsync(productId);
-        if (product is null)
-        {
-            AddErrorValidation("The product does not exist");
-            return View("Index", await _cartService.GetAsync());
-        }
-
-        var response = await _cartService.RemoveItemCartAsync(productId);
+        var response = await _ordersBffService.RemoveItemCartAsync(productId);
         if (ResponseHasErrors(response))
-            return View("Index", await _cartService.GetAsync());
+            return View("Index", await _ordersBffService.GetAsync());
 
         return RedirectToAction("Index");
-    }
-
-    private void ValidateItemCart(ProductViewModel product, int amount)
-    {
-        if (product is null)
-            AddErrorValidation("The product does not exist");
-
-        if (amount < 1)
-            AddErrorValidation($"Choose at least 1 unit of the product {product.Name}");
-
-        if (amount > product.StockAmount)
-            AddErrorValidation($"The product {product.Name} has {product.StockAmount} unit(s) in stock, you have chosen {amount}");
     }
 }

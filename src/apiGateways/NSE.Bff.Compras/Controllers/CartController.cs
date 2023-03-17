@@ -17,7 +17,7 @@ public class CartController : MainController
         CustomResponse(await _cartService.GetAsync());
 
     [HttpGet]
-    [Route("orders/cart-amount")]
+    [Route("orders/amount-cart")]
     public async Task<int> GetCartAmount()
     {
         var amount = await _cartService.GetAsync();

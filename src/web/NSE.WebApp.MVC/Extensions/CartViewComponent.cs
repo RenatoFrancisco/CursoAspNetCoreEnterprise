@@ -2,13 +2,9 @@
 
 public class CartViewComponent : ViewComponent
 {
-    private readonly ICartService _cartService;
+    private readonly IOrdersBffService _ordersBffService;
 
-    public CartViewComponent(ICartService cartService) => _cartService = cartService;
+    public CartViewComponent(IOrdersBffService ordersBffService) => _ordersBffService = ordersBffService;
 
-    public async Task<IViewComponentResult> InvokeAsync()
-    {
-        var cart = await _cartService.GetAsync();
-        return View(cart?.Items?.Count() ?? 0);    
-    }
+    public async Task<IViewComponentResult> InvokeAsync() => View(await _ordersBffService.GetAmountCartAsync());
 }
