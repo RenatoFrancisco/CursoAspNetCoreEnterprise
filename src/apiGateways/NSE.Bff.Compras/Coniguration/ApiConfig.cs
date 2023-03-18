@@ -17,8 +17,18 @@ public static class ApiConfig
 
         services.Configure<AppServicesSettings>(configuration);
 
-        services.AddControllers()
-            .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
+        services.AddControllers();
+            //.ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("Total",
+                builder =>
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+        });
 
         return services;
     }
@@ -29,6 +39,8 @@ public static class ApiConfig
             app.UseDeveloperExceptionPage();
 
         app.UseHttpsRedirection();
+
+        app.UseCors("Total");
 
         app.UseAuthConfiguration();
 

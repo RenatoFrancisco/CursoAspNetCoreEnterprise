@@ -1,5 +1,8 @@
-﻿namespace NSE.Bff.Compras.Controllers;
+﻿using Microsoft.AspNetCore.Authorization;
 
+namespace NSE.Bff.Compras.Controllers;
+
+[Authorize]
 public class CartController : MainController
 {
     private readonly ICartService _cartService;

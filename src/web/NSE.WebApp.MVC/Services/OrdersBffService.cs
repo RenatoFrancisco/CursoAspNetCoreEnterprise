@@ -27,7 +27,7 @@ public class OrdersBffService : Service, IOrdersBffService
     public async Task<ResponseResult> AddItemCartAsync(ItemCartViewModel product)
     {
         var itemContent = GetContent(product);
-        var response = await _httpClient.PostAsync("/orders/cart/item/", itemContent);
+        var response = await _httpClient.PostAsync("/orders/cart/items/", itemContent);
 
         if (!HandleResponseErrors(response))
             return await DeserializeResponseObject<ResponseResult>(response);
@@ -38,7 +38,7 @@ public class OrdersBffService : Service, IOrdersBffService
     public async Task<ResponseResult> UpdateItemCartAsync(Guid productId, ItemCartViewModel product)
     {
         var itemContent = GetContent(product);
-        var response = await _httpClient.PutAsync($"/orders/cart/item/{productId}", itemContent);
+        var response = await _httpClient.PutAsync($"/orders/cart/items/{productId}", itemContent);
 
         if (!HandleResponseErrors(response))
             return await DeserializeResponseObject<ResponseResult>(response);
