@@ -1,5 +1,6 @@
 global using IAuthenticationService = NSE.WebApp.MVC.Services.IAuthenticationService;
 global using AuthenticationService = NSE.WebApp.MVC.Services.AuthenticationService;
+global using ResponseResult = NSE.WebApp.MVC.Models.ResponseResult;
 global using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 global using Microsoft.AspNetCore.Authentication.Cookies;
 global using Microsoft.AspNetCore.Mvc.DataAnnotations;
@@ -20,7 +21,6 @@ global using NSE.WebApp.MVC.Services;
 global using System.Net.Http.Headers;
 global using System.Security.Claims;
 global using NSE.Core.DomainObjects;
-global using NSE.Core.Communication;
 global using NSE.WebApp.MVC.Models;
 global using Polly.Extensions.Http;
 global using System.ComponentModel;

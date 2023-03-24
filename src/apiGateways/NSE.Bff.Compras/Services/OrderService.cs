@@ -1,8 +1,8 @@
 ﻿namespace NSE.Bff.Compras.Services;
 
-public interface IPedidoService { }
+public interface IOrderService { }
 
-public class OrderService : Service, IPedidoService
+public class OrderService : Service, IOrderService
 {
     private readonly HttpClient _httpClient;
 
