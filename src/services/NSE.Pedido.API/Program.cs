@@ -1,5 +1,3 @@
-using NSE.WebAPI.Core.Identity;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApiConfiguration(builder.Configuration, builder);

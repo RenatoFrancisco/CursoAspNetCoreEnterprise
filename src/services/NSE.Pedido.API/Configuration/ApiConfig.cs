@@ -1,4 +1,4 @@
-﻿namespace NSE.Carrinho.API.Configuration;
+﻿namespace NSE.Pedido.API.Configuration;
 
 public static class ApiConfig
 {

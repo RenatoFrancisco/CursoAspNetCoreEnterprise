@@ -1,4 +1,4 @@
-namespace NSE.Carrinho.API.Configuration;
+namespace NSE.Pedido.API.Configuration;
 
 public static class SwaggerConfig
 {
@@ -9,7 +9,7 @@ public static class SwaggerConfig
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = $"NerdStore Enteprise Order API - {builder.Environment.EnvironmentName}",
+                Title = $"NerdStore Enteprise Orders API - {builder.Environment.EnvironmentName}",
                 Description = "This API makes parts of the Course ASP.NET Core Enterprise Applications"
             });
         });

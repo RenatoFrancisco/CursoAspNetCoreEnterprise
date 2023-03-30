@@ -1,6 +1,4 @@
-﻿using NSE.Orders.Domain;
-
-namespace NSE.Orders.Infra.Data.Repositories;
+﻿namespace NSE.Orders.Infra.Data.Repositories;
 
 public class VoucherRepository : IVoucherRepository
 {
