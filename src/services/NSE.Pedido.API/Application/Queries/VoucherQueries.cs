@@ -18,6 +18,8 @@ public class VoucherQueries : IVoucherQueries
 
         if (voucher == null) return null;
 
+        if (!voucher.IsValidForUtilization()) return null;
+
         return new VoucherDTO
         {
             Code = voucher.Code,

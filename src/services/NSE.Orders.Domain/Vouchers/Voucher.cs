@@ -1,4 +1,6 @@
-﻿namespace NSE.Orders.Domain;
+﻿using NSE.Pedidos.Domain.Specs;
+
+namespace NSE.Orders.Domain;
 
 public class Voucher : Entity, IAggregateRoot
 {
@@ -13,6 +15,12 @@ public class Voucher : Entity, IAggregateRoot
     public bool Active { get; private set; }
     public bool Used { get; private set; }
 
+    public bool IsValidForUtilization() =>
+        new ActiveVoucherSpecification()
+            .And(new DateVoucherSpecification())
+            .And(new AmountVoucherSpecification())
+            .IsSatisfiedBy(this);
+
     public void CheckAsUsed()
     {
         Active = false;
@@ -21,7 +29,7 @@ public class Voucher : Entity, IAggregateRoot
         UsedOn = DateTime.Now;
     }
 
-    public void DebitarQuantidade()
+    public void DebtAmount()
     {
         Amount -= 1;
         if (Amount >= 1) return;
