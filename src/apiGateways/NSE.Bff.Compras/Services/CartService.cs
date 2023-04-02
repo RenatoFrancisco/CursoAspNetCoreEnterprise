@@ -3,9 +3,10 @@
 public interface ICartService 
 {
     Task<CartDTO> GetAsync();
-    Task<ResponseResult> AddItemCart(ItemCartDTO product);
-    Task<ResponseResult> UpdateItemCart(Guid productId, ItemCartDTO cart);
-    Task<ResponseResult> RemoveItemCart(Guid productId);
+    Task<ResponseResult> AddItemCartAsync(ItemCartDTO product);
+    Task<ResponseResult> UpdateItemCartAsync(Guid productId, ItemCartDTO cart);
+    Task<ResponseResult> RemoveItemCartAsync(Guid productId);
+    Task<ResponseResult> ApplyCartVoucherAsync(VoucherDTO voucher);
 }
 
 public class CartService : Service, ICartService
@@ -27,7 +28,7 @@ public class CartService : Service, ICartService
         return await DeserializeResponseObject<CartDTO>(response);
     }
 
-    public async Task<ResponseResult> AddItemCart(ItemCartDTO product)
+    public async Task<ResponseResult> AddItemCartAsync(ItemCartDTO product)
     {
         var itemContent = GetContent(product);
 
@@ -38,7 +39,7 @@ public class CartService : Service, ICartService
         return ReturnsOK();
     }
 
-    public async Task<ResponseResult> UpdateItemCart(Guid productId, ItemCartDTO cart)
+    public async Task<ResponseResult> UpdateItemCartAsync(Guid productId, ItemCartDTO cart)
     {
         var itemContent = GetContent(cart);
 
@@ -49,9 +50,20 @@ public class CartService : Service, ICartService
         return ReturnsOK();
     }
 
-    public async Task<ResponseResult> RemoveItemCart(Guid productId)
+    public async Task<ResponseResult> RemoveItemCartAsync(Guid productId)
     {
         var response = await _httpClient.DeleteAsync($"/cart/{productId}");
+
+        if (!HandleResponseErrors(response)) return await DeserializeResponseObject<ResponseResult>(response);
+
+        return ReturnsOK();
+    }
+
+    public async Task<ResponseResult> ApplyCartVoucherAsync(VoucherDTO voucher)
+    {
+        var itemContent = GetContent(voucher);
+
+        var response = await _httpClient.PostAsJsonAsync("/cart/apply-voucher/", itemContent);
 
         if (!HandleResponseErrors(response)) return await DeserializeResponseObject<ResponseResult>(response);
 

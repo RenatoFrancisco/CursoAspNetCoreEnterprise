@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿    using Microsoft.AspNetCore.Authorization;
 
 namespace NSE.Bff.Compras.Controllers;
 
@@ -7,11 +7,15 @@ public class CartController : MainController
 {
     private readonly ICartService _cartService;
     private readonly ICatalogService _catalogService;
+    private readonly IOrderService _orderService;
 
-    public CartController(ICartService cartService, ICatalogService catalogService)
+    public CartController(ICartService cartService, 
+                          ICatalogService catalogService, 
+                          IOrderService orderService)
     {
         _cartService = cartService;
         _catalogService = catalogService;
+        _orderService = orderService;
     }
 
     [HttpGet]
@@ -40,7 +44,7 @@ public class CartController : MainController
         itemProduct.Value = product.Value;
         itemProduct.Image = product.Image;
 
-        var response = await _cartService.AddItemCart(itemProduct);
+        var response = await _cartService.AddItemCartAsync(itemProduct);
 
         return CustomResponse(response);
     }
@@ -54,7 +58,7 @@ public class CartController : MainController
         await ValidateItemCartAsync(product, itemProduct.Amount);
         if (!IsValidOperation) return CustomResponse();
 
-        var response = await _cartService.UpdateItemCart(productId, itemProduct);
+        var response = await _cartService.UpdateItemCartAsync(productId, itemProduct);
 
         return CustomResponse(response);
     }
@@ -71,8 +75,23 @@ public class CartController : MainController
             return CustomResponse();
         }
 
-        var response = await _cartService.RemoveItemCart(productId);
+        var response = await _cartService.RemoveItemCartAsync(productId);
 
+        return CustomResponse(response);
+    }
+
+    [HttpPost]
+    [Route("orders/cart/apply-voucher")]
+    public async Task<IActionResult> ApplyVoucher([FromBody]string voucherCode)
+    {
+        var voucher = await _orderService.GetVoucherByCodeAsync(voucherCode);
+        if (voucher is null) 
+        {
+            AddError("The voucher is invalid or it has not been found!");
+            return CustomResponse();
+        }
+
+        var response = await _cartService.ApplyCartVoucherAsync(voucher);
         return CustomResponse(response);
     }
 

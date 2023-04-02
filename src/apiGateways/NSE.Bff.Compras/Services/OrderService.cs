@@ -1,6 +1,9 @@
 ﻿namespace NSE.Bff.Compras.Services;
 
-public interface IOrderService { }
+public interface IOrderService 
+{
+    Task<VoucherDTO> GetVoucherByCodeAsync(string code);
+}
 
 public class OrderService : Service, IOrderService
 {
@@ -10,5 +13,16 @@ public class OrderService : Service, IOrderService
     {
         _httpClient = httpClient;
         _httpClient.BaseAddress = new Uri(settings.Value.OrderUrl);
+    }
+
+    public async Task<VoucherDTO> GetVoucherByCodeAsync(string code)
+    {
+        var response = await _httpClient.GetAsync($"/voucher/{code}");
+
+        if (response.StatusCode == HttpStatusCode.NotFound) return null;
+
+        HandleResponseErrors(response);
+
+        return await DeserializeResponseObject<VoucherDTO>(response);
     }
 }

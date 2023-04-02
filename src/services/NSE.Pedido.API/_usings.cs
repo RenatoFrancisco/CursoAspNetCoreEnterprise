@@ -1,10 +1,14 @@
 ﻿global using NSE.Orders.Infra.Data.Repositories;
+global using NSE.Pedido.API.Application.Queries;
 global using NSE.Pedido.API.Application.DTO;
 global using Microsoft.EntityFrameworkCore;
 global using NSE.Pedido.API.Configuration;
+global using NSE.WebAPI.Core.Controllers;
 global using Microsoft.OpenApi.Models;
+global using Microsoft.AspNetCore.Mvc;
 global using NSE.WebAPI.Core.Identity;
 global using NSE.Orders.Infra.Data;
 global using NSE.WebAPI.Core.User;
 global using NSE.Orders.Domain;
 global using NSE.Core.Mediator;
+global using System.Net;

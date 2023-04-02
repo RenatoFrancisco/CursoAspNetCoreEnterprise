@@ -10,6 +10,7 @@ public static class DependencyInjectionConfig
 
         // Application
         services.AddScoped<IMediatorHandler, MediatorHandler>();
+        services.AddScoped<IVoucherQueries, VoucherQueries>();
 
         // Data
         services.AddScoped<IVoucherRepository, VoucherRepository>();

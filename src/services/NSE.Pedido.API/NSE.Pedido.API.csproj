@@ -21,7 +21,6 @@
   <ItemGroup>
     <Folder Include="Application\Commands\" />
     <Folder Include="Application\Events\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
   <ItemGroup>
