@@ -29,14 +29,14 @@ public sealed class CartContext : DbContext
             .OwnsOne(c => c.Voucher, v =>
             {
                 v.Property(vc => vc.Code)
-                    .HasColumnName("VoucherCodigo")
+                    .HasColumnName("VoucherCode")
                     .HasColumnType("varchar(50)");
 
                 v.Property(vc => vc.DiscountType)
                     .HasColumnName("DiscountType");
 
-                v.Property(vc => vc.Percentual)
-                    .HasColumnName("Percentual");
+                v.Property(vc => vc.Percentage)
+                    .HasColumnName("Percentage");
 
                 v.Property(vc => vc.DiscountedValue)
                     .HasColumnName("DiscountedValue");

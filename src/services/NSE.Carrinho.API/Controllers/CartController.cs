@@ -68,6 +68,20 @@ public class CartController : MainController
         return CustomResponse();
     }
 
+    [HttpPost]
+    [Route("cart/apply-voucher")]
+    public async Task<IActionResult> ApplyVoucher(Voucher voucher)
+    {
+        var cart = await GetCustomerCartAsync();
+
+        cart.ApplyVoucher(voucher);
+
+        _context.CustomerCart.Update(cart);
+
+        await PersistAsync();
+        return CustomResponse();
+    }
+
     private void HandleNewCart(ItemCart item)
     {
         var cart = new CustomerCart(_user.GetUserId());

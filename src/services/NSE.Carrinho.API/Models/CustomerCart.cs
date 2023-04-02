@@ -43,11 +43,11 @@ public class CustomerCart
         decimal discount = 0;
         var value = TotalValue;
 
-        if (Voucher.DiscountType == VoucherDiscountType.Percetage)
+        if (Voucher.DiscountType == VoucherDiscountType.Percentage)
         {
-            if (Voucher.Percentual.HasValue)
+            if (Voucher.Percentage.HasValue)
             {
-                discount = (value * Voucher.Percentual.Value) / 100;
+                discount = (value * Voucher.Percentage.Value) / 100;
                 value -= discount;
             }
         }
