@@ -63,7 +63,7 @@ public class CartService : Service, ICartService
     {
         var itemContent = GetContent(voucher);
 
-        var response = await _httpClient.PostAsJsonAsync("/cart/apply-voucher/", itemContent);
+        var response = await _httpClient.PostAsync("/cart/apply-voucher/", itemContent);
 
         if (!HandleResponseErrors(response)) return await DeserializeResponseObject<ResponseResult>(response);
 

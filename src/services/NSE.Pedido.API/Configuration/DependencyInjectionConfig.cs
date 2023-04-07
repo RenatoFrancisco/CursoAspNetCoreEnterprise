@@ -9,7 +9,7 @@ public static class DependencyInjectionConfig
         services.AddScoped<IAspNetUser, AspNetUser>();
 
         // Application
-        services.AddScoped<IMediatorHandler, MediatorHandler>();
+        //services.AddScoped<IMediatorHandler, MediatorHandler>();
         services.AddScoped<IVoucherQueries, VoucherQueries>();
 
         // Data

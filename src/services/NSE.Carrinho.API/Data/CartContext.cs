@@ -35,7 +35,7 @@ public sealed class CartContext : DbContext
                 v.Property(vc => vc.DiscountType)
                     .HasColumnName("DiscountType");
 
-                v.Property(vc => vc.Percentage)
+                v.Property(vc => vc.Percent)
                     .HasColumnName("Percentage");
 
                 v.Property(vc => vc.DiscountedValue)

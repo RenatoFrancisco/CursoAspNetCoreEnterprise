@@ -2,33 +2,31 @@
 
 public class OrdersContext : DbContext, IUnitOfWork
 {
-    private readonly IMediatorHandler _mediatorHandler;
+    private readonly IMediatorHandler _mediator;
 
-    public OrdersContext(DbContextOptions<OrdersContext> options, IMediatorHandler mediatorHandler)
-        : base(options)
+    public OrdersContext(DbContextOptions<OrdersContext> options) : base(options)
     {
-        _mediatorHandler = mediatorHandler;
+        ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTrackingWithIdentityResolution;
+        ChangeTracker.AutoDetectChangesEnabled = true;
     }
 
     public DbSet<Voucher> Vouchers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
-            e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
-            property.SetColumnType("varchar(100)");
-
         modelBuilder.Ignore<Event>();
         modelBuilder.Ignore<ValidationResult>();
 
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrdersContext).Assembly);
+        foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
+            e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
+            property.SetColumnType("varchar(100)");
 
         foreach (var relationship in modelBuilder.Model.GetEntityTypes()
             .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
         modelBuilder.HasSequence<int>("MySequence").StartsAt(1000).IncrementsBy(1);
 
-        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrdersContext).Assembly);
     }
 
     public async Task<bool> CommitAsync()
@@ -48,6 +46,30 @@ public class OrdersContext : DbContext, IUnitOfWork
         }
 
         var success = await base.SaveChangesAsync() > 0;
+
         return success;
+    }
+}
+
+public static class MediatorExtension
+{
+    public static async Task PublishEventsAsync<T>(this IMediatorHandler mediator, T ctx) where T : DbContext
+    {
+        var domainEntities = ctx.ChangeTracker
+            .Entries<Entity>()
+            .Where(x => x.Entity.Notifications is not null && x.Entity.Notifications.Any());
+
+        var domainEvents = domainEntities
+            .SelectMany(x => x.Entity.Notifications)
+            .ToList();
+
+        domainEntities.ToList()
+            .ForEach(entity => entity.Entity.ClearEvents());
+
+        var tasks = domainEvents
+            .Select(async (domainEvent) =>
+                await mediator.PublishEventAsync(domainEvent));
+
+        await Task.WhenAll(tasks);
     }
 }

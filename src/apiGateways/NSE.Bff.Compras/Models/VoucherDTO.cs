@@ -4,6 +4,6 @@ public class VoucherDTO
 {
     public decimal? Percent { get; set; }
     public decimal? DiscountValue { get; set; }
-    public int Amount { get; set; }
+    public string Code { get; set; }
     public int DiscountType { get; set; }
 }

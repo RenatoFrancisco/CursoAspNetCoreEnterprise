@@ -45,9 +45,9 @@ public class CustomerCart
 
         if (Voucher.DiscountType == VoucherDiscountType.Percentage)
         {
-            if (Voucher.Percentage.HasValue)
+            if (Voucher.Percent.HasValue)
             {
-                discount = (value * Voucher.Percentage.Value) / 100;
+                discount = (value * Voucher.Percent.Value) / 100;
                 value -= discount;
             }
         }

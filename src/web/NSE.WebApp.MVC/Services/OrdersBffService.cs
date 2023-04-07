@@ -10,7 +10,7 @@ public class OrdersBffService : Service, IOrdersBffService
         _httpClient.BaseAddress = new Uri(settings.Value.OrdersBffUrl);
     }
 
-    public async Task<CartViewModel> GetAsync()
+    public async Task<CartViewModel> GetCartAsync()
     {
         var response = await _httpClient.GetAsync("/orders/cart/");
         HandleResponseErrors(response);
@@ -49,6 +49,17 @@ public class OrdersBffService : Service, IOrdersBffService
     public async Task<ResponseResult> RemoveItemCartAsync(Guid productId)
     {
         var response = await _httpClient.DeleteAsync($"/orders/cart/items/{productId}");
+
+        if (!HandleResponseErrors(response))
+            return await DeserializeResponseObject<ResponseResult>(response);
+
+        return ReturnsOk();
+    }
+
+    public async Task<ResponseResult> ApplyCartVoucher(string voucher)
+    {
+        var itemContent = GetContent(voucher);
+        var response = await _httpClient.PostAsync("/orders/cart/apply-voucher", itemContent);
 
         if (!HandleResponseErrors(response))
             return await DeserializeResponseObject<ResponseResult>(response);

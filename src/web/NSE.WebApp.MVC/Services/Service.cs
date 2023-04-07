@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Options;
-
 namespace NSE.WebApp.MVC.Services;
 
 public abstract class Service
@@ -18,5 +16,5 @@ public abstract class Service
         _ => false
     };
 
-    protected ResponseResult ReturnsOk() => new ResponseResult();
+    protected ResponseResult ReturnsOk() => new();
 }

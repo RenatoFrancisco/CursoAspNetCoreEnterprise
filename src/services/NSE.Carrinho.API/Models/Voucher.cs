@@ -2,7 +2,7 @@
 
 public class Voucher
 {
-    public decimal? Percentage { get; set; }
+    public decimal? Percent { get; set; }
     public decimal? DiscountedValue { get; set; }
     public string Code { get; set; }
     public VoucherDiscountType DiscountType { get; set; }
