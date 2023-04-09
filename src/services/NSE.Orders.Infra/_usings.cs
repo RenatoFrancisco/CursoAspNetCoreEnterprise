@@ -1,6 +1,7 @@
 ﻿global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.EntityFrameworkCore.ChangeTracking;
 global using Microsoft.EntityFrameworkCore;
+global using NSE.Orders.Domain.Orders;
 global using FluentValidation.Results;
 global using NSE.Core.DomainObjects;
 global using NSE.Orders.Domain;

@@ -4,8 +4,8 @@ public interface IOrderRepository : IRepository<Order>
 {
     Task<Order> GetById(Guid id);
     Task<IEnumerable<Order>> GetListByCustomerId(Guid customerId);
-    void Add(Order Order);
-    void Update(Order Order);
+    void Add(Order order);
+    void Update(Order order);
 
     DbConnection GetConnection();
 

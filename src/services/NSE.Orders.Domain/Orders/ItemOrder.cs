@@ -1,5 +1,6 @@
 ﻿namespace NSE.Orders.Domain.Orders;
-public class ItemOrder
+
+public class ItemOrder : Entity
 {
     public Guid OrderId { get; private set; }
     public Guid ProductId { get; private set; }

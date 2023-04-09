@@ -10,6 +10,8 @@ public class OrdersContext : DbContext, IUnitOfWork
         ChangeTracker.AutoDetectChangesEnabled = true;
     }
 
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<ItemOrder> ItemsOrder { get; set; }
     public DbSet<Voucher> Vouchers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,6 +29,8 @@ public class OrdersContext : DbContext, IUnitOfWork
         modelBuilder.HasSequence<int>("MySequence").StartsAt(1000).IncrementsBy(1);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrdersContext).Assembly);
+
+        base.OnModelCreating(modelBuilder);
     }
 
     public async Task<bool> CommitAsync()
