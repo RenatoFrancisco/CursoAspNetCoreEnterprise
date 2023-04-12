@@ -7,7 +7,7 @@ public class AddOrderCommand : Command
     // Order
     public Guid CustomerId { get; set; }
     public decimal TotalValue { get; set; }
-    public List<ItemOrder> ItemsOrder { get; set; }
+    public List<ItemOrderDTO> ItemsOrder { get; set; }
 
     // Voucher
     public string VoucherCode { get; set; }

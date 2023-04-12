@@ -9,7 +9,7 @@ public class ItemOrderDTO
     public string Image { get; set; }
     public int Amount { get; set; }
 
-    public static ItemOrder ParaPedidoItem(ItemOrderDTO itemOrderDTO)
+    public static ItemOrder ToItemOrder(ItemOrderDTO itemOrderDTO)
     {
         return new ItemOrder(itemOrderDTO.ProductId, itemOrderDTO.Name, itemOrderDTO.Amount,
             itemOrderDTO.Value, itemOrderDTO.Image);

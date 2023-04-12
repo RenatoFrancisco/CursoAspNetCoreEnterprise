@@ -1,6 +1,4 @@
-﻿using NSE.Pedidos.Domain.Specs;
-
-namespace NSE.Orders.Domain;
+﻿namespace NSE.Orders.Domain;
 
 public class Voucher : Entity, IAggregateRoot
 {

@@ -1,5 +1,7 @@
 ﻿global using NSE.Orders.Infra.Data.Repositories;
 global using NSE.Pedido.API.Application.Queries;
+global using NSE.Pedido.API.Application.Events;
+global using NSE.Orders.Domain.Vouchers.Specs;
 global using NSE.Pedido.API.Application.DTO;
 global using Microsoft.EntityFrameworkCore;
 global using NSE.Pedido.API.Configuration;
