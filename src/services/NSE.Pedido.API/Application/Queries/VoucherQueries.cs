@@ -11,7 +11,6 @@ public class VoucherQueries : IVoucherQueries
 
     public VoucherQueries(IVoucherRepository voucherRepository) => _voucherRepository = voucherRepository;
 
-
     public async Task<VoucherDTO> GetVoucherByCode(string code)
     {
         var voucher = await _voucherRepository.GetVoucherByCode(code);

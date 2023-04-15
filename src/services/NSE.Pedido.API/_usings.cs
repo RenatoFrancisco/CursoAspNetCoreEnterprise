@@ -17,3 +17,4 @@ global using NSE.Orders.Domain;
 global using NSE.Core.Messages;
 global using System.Net;
 global using MediatR;
+global using Dapper;
