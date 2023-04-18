@@ -4,8 +4,10 @@ public class OrdersContext : DbContext, IUnitOfWork
 {
     private readonly IMediatorHandler _mediator;
 
-    public OrdersContext(DbContextOptions<OrdersContext> options) : base(options)
+    public OrdersContext(DbContextOptions<OrdersContext> options, IMediatorHandler mediator) : base(options)
     {
+        _mediator = mediator;
+
         ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTrackingWithIdentityResolution;
         ChangeTracker.AutoDetectChangesEnabled = true;
     }
@@ -50,6 +52,7 @@ public class OrdersContext : DbContext, IUnitOfWork
         }
 
         var success = await base.SaveChangesAsync() > 0;
+        if (success) await _mediator.PublishEventsAsync(this);
 
         return success;
     }
