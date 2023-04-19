@@ -1,4 +1,5 @@
 ﻿global using NSE.Orders.Infra.Data.Repositories;
+global using NSE.Pedido.API.Application.Commands;
 global using NSE.Pedido.API.Application.Queries;
 global using NSE.Pedido.API.Application.Events;
 global using NSE.Orders.Domain.Vouchers.Specs;
@@ -16,6 +17,7 @@ global using NSE.Orders.Infra.Data;
 global using NSE.WebAPI.Core.User;
 global using NSE.Orders.Domain;
 global using NSE.Core.Messages;
+global using NSE.Core.Mediator;
 global using NSE.MessageBus;
 global using NSE.Core.Utils;
 global using System.Net;
