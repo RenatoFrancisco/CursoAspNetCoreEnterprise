@@ -20,7 +20,8 @@ public class Address : Entity
                    string district, 
                    string zipCode, 
                    string city, 
-                   string state)
+                   string state,
+                   Guid customerId)
     {
         Street = street;
         Number = number;
@@ -29,5 +30,6 @@ public class Address : Entity
         ZipCode = zipCode;
         City = city;
         State = state;
+        CustomerId = customerId;
     }
 }

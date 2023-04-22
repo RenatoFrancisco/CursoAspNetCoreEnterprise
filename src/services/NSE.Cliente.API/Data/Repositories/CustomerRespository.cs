@@ -18,4 +18,9 @@ public class CustomerRespository : ICustomerRepository
     public void Add(Customer customer) => _context.Customers.Add(customer);
 
     public void Dispose() => _context?.Dispose();
+
+    public async Task<Address> GetAddressByIdAsync(Guid id) =>
+        await _context.Addresses.FirstOrDefaultAsync(address => address.CustomerId == id);
+
+    public void AddAddress(Address address) => _context.Addresses.Add(address);
 }

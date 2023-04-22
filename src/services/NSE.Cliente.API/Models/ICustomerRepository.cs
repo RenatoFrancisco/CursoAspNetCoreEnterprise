@@ -6,4 +6,7 @@ public interface ICustomerRepository : IRepository<Customer>
     Task<Customer> FindByCpfAsync(string cpf);
 
     void Add(Customer customer);
+
+    Task<Address> GetAddressByIdAsync(Guid id);
+    void AddAddress(Address address);
 }

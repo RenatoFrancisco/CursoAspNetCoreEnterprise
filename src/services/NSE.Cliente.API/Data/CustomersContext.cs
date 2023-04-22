@@ -13,11 +13,11 @@ public class CustomersContext : DbContext, IUnitOfWork
     }
 
     public DbSet<Customer> Customers { get; set; }
-    public DbSet<Address> Adresses { get; set; }
+    public DbSet<Address> Addresses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Ignore<ValidationResult>();
+        modelBuilder.Ignore<System.ComponentModel.DataAnnotations.ValidationResult>();
         modelBuilder.Ignore<Event>();
 
         foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(

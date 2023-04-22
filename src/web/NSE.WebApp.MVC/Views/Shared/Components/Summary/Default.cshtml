@@ -8,3 +8,25 @@
         <div style="padding-top: 20px" asp-validation-summary="All" class="text-danger"></div>
     </div>
 }
+
+@{
+    if (TempData["Errors"] is IEnumerable<string> errorMessages && errorMessages.Any())
+    {
+        <div style="padding-top: 15px;"></div>
+
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h3 id="msgRetorno" style="padding-top: 20px">Ops! Somenthing is wrong :(</h3>
+
+            <ul>
+                @{
+                    foreach (var error in errorMessages)
+                    {
+                        <li>@error</li>
+                    }
+                }
+
+            </ul>
+        </div>
+    }
+}

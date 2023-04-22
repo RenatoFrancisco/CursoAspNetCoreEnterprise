@@ -1,4 +1,5 @@
-﻿global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿global using ValidationResult = FluentValidation.Results.ValidationResult;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using NSE.Cliente.API.Application.Commands.Validators;
 global using NSE.Cliente.API.Application.Commands;
 global using NSE.Cliente.API.Application.Events;
@@ -8,7 +9,6 @@ global using NSE.Core.Messages.Integration;
 global using NSE.WebAPI.Core.Controllers;
 global using NSE.Cliente.API.Extensions;
 global using Microsoft.OpenApi.Models;
-global using FluentValidation.Results;
 global using NSE.Cliente.API.Services;
 global using Microsoft.AspNetCore.Mvc;
 global using NSE.WebAPI.Core.Identity;

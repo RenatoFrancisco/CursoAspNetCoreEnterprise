@@ -1,6 +1,11 @@
-﻿namespace NSE.Cliente.API.Application.Commands;
+﻿using Caelum.Stella.CSharp.Http;
 
-public class CustomerCommandHandler : CommandHandler, IRequestHandler<RegisterCustomerCommand, ValidationResult>
+
+namespace NSE.Cliente.API.Application.Commands;
+
+public class CustomerCommandHandler : CommandHandler, 
+    IRequestHandler<RegisterCustomerCommand, ValidationResult>,
+    IRequestHandler<AddAddressCommand, ValidationResult>
 {
     private readonly ICustomerRepository _customerRepository;
 
@@ -22,6 +27,18 @@ public class CustomerCommandHandler : CommandHandler, IRequestHandler<RegisterCu
         _customerRepository.Add(customer);
 
         customer.AddEvent(new RegisteredCustomerEvent(message.Id, message.Name, message.Email, message.Cpf));
+
+        return await PersistDataAsync(_customerRepository.UnitOfWork);
+    }
+
+    public async Task<ValidationResult> Handle(AddAddressCommand message, CancellationToken cancellationToken)
+    {
+        if (!message.IsValid()) return message.ValidationResult;
+
+        var address = new Address(message.Street, message.Number, message.Complement, message.Neighborhood, 
+                                  message.ZipCode, message.City, message.State, message.CustomerId);
+
+        _customerRepository.AddAddress(address);
 
         return await PersistDataAsync(_customerRepository.UnitOfWork);
     }
