@@ -66,4 +66,33 @@ public class OrdersBffService : Service, IOrdersBffService
 
         return ReturnsOk();
     }
+
+    public TransactionOrderViewModel MapToOrder(CartViewModel cart, AddressViewModel address)
+    {
+        var order = new TransactionOrderViewModel
+        {
+            TotalValue = cart.TotalValue,
+            Items = cart.Items,
+            Discount = cart.Discount,
+            UsedVoucher = cart.UsedVoucher,
+            VoucherCode = cart.Voucher?.Code
+        };
+
+        if (address is not null)
+        {
+            order.Address = new AddressViewModel
+            {
+                Street = address.Street,
+                Number = address.Number,
+                Neighborhood = address.Neighborhood,
+                ZipCode = address.ZipCode,
+                Complement = address.Complement,
+                City = address.City,
+                State = address.State
+            };
+        }
+
+        return order;
+    }
+
 }

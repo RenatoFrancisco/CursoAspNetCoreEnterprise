@@ -8,4 +8,5 @@ public interface IOrdersBffService
     Task<ResponseResult> UpdateItemCartAsync(Guid productId, ItemCartViewModel product);
     Task<ResponseResult> RemoveItemCartAsync(Guid productId);
     Task<ResponseResult> ApplyCartVoucher(string voucher);
+    TransactionOrderViewModel MapToOrder(CartViewModel cart, AddressViewModel address);
 }

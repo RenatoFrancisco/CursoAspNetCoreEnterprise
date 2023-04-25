@@ -17,4 +17,8 @@
     <ProjectReference Include="..\..\buildingBlocks\NSE.WebAPI.Core\NSE.WebAPI.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Order\" />
+  </ItemGroup>
+
 </Project>
