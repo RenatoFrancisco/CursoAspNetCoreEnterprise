@@ -1,6 +1,4 @@
-﻿using Caelum.Stella.CSharp.Http;
-
-namespace NSE.WebApp.MVC.Services;
+﻿namespace NSE.WebApp.MVC.Services;
 
 public class CustomerService : Service, ICustomerService
 {

@@ -37,4 +37,7 @@ public static class RazorHelpers
 
         return sb.ToString();
     }
+
+    public static string UnitsPerProductTotalValue(this RazorPage page, int units, decimal value) =>
+        $"{units}x {FormatCurrency(value)} = Total: {FormatCurrency(value * units)}";
 }

@@ -1,4 +1,4 @@
-﻿function BuscaCep() {
+﻿function SearchZipCode() {
     $(document).ready(function () {
 
         function limpa_formulário_cep() {
