@@ -49,7 +49,7 @@ public class CartController : MainController
     [Route("cart/apply-voucher")]
     public async Task<IActionResult> ApplyVoucher(string voucherCode)
     {
-        var response = await _ordersBffService.ApplyCartVoucher(voucherCode);
+        var response = await _ordersBffService.ApplyCartVoucherAsync(voucherCode);
 
         if (ResponseHasErrors(response))
             return View("Index", await _ordersBffService.GetCartAsync());

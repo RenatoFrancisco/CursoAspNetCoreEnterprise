@@ -56,7 +56,7 @@ public class OrdersBffService : Service, IOrdersBffService
         return ReturnsOk();
     }
 
-    public async Task<ResponseResult> ApplyCartVoucher(string voucher)
+    public async Task<ResponseResult> ApplyCartVoucherAsync(string voucher)
     {
         var itemContent = GetContent(voucher);
         var response = await _httpClient.PostAsync("/orders/cart/apply-voucher", itemContent);
@@ -95,4 +95,32 @@ public class OrdersBffService : Service, IOrdersBffService
         return order;
     }
 
+    public async Task<ResponseResult> FinishOrderAsync(TransactionOrderViewModel transactionOrder)
+    {
+        var orderContent = GetContent(transactionOrder);
+
+        var response = await _httpClient.PostAsync("/orders/finish/", orderContent);
+
+        if (!HandleResponseErrors(response)) return await DeserializeResponseObject<ResponseResult>(response);
+
+        return ReturnsOk();
+    }
+
+    public async Task<OrderViewModel> GetLastOrderAsync()
+    {
+        var response = await _httpClient.GetAsync("/orders/last/");
+
+        HandleResponseErrors(response);
+
+        return await DeserializeResponseObject<OrderViewModel>(response);
+    }
+
+    public async Task<IEnumerable<OrderViewModel>> GetListByCustomerIdAsync()
+    {
+        var response = await _httpClient.GetAsync("/orders/customer-list/");
+
+        HandleResponseErrors(response);
+
+        return await DeserializeResponseObject<IEnumerable<OrderViewModel>>(response);
+    }
 }

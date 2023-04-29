@@ -22,4 +22,48 @@ public class OrderController : MainController
 
         return View(order);
     }
+
+    [HttpGet("payment")]
+    public async Task<IActionResult> Payment()
+    {
+        var cart = await _orderBffService.GetCartAsync();
+        if (cart.Items.Count == 0) return RedirectToAction("Index", "Carrinho");
+
+        var order = _orderBffService.MapToOrder(cart, null);
+
+        return View(order);
+    }
+
+    [HttpPost("finish-order")]
+    public async Task<IActionResult> FinishOrder(TransactionOrderViewModel orderTransaction)
+    {
+        if (!ModelState.IsValid) return View("Payment", _orderBffService.MapToOrder(
+            await _orderBffService.GetCartAsync(), null));
+
+        var response = await _orderBffService.FinishOrderAsync(orderTransaction);
+
+        if (ResponseHasErrors(response))
+        {
+            var cart = await _orderBffService.GetCartAsync();
+            if (cart.Items.Count == 0) return RedirectToAction("Index", "Cart");
+
+            var pedidoMap = _orderBffService.MapToOrder(cart, null);
+            return View("Payment", pedidoMap);
+        }
+
+        return RedirectToAction("OrderConcluded");
+    }
+
+    [HttpGet]
+    [Route("concluded-order")]
+    public async Task<IActionResult> ConcludedOrder()
+    {
+        return View("ConfirmationOrder", await _orderBffService.GetLastOrderAsync());
+    }
+
+    [HttpGet("my-orders")]
+    public async Task<IActionResult> MeusPedidos()
+    {
+        return View(await _orderBffService.GetListByCustomerIdAsync());
+    }
 }
