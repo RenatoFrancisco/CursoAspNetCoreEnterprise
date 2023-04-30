@@ -1,4 +1,5 @@
 ﻿global using PollyExtensions = NSE.Bff.Compras.Extensions.PollyExtensions;
+global using System.ComponentModel.DataAnnotations;
 global using NSE.Bff.Compras.Configuration;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.EntityFrameworkCore;
@@ -14,8 +15,10 @@ global using System.Net.Http.Headers;
 global using NSE.Identidade.API.Data;
 global using NSE.Bff.Compras.Models;
 global using NSE.Core.Communication;
+global using System.ComponentModel;
 global using Polly.Extensions.Http;
 global using NSE.WebAPI.Core.User;
+global using NSE.Core.Validation;
 global using System.Text.Json;
 global using NSE.Core.Utils;
 global using NSE.MessageBus;

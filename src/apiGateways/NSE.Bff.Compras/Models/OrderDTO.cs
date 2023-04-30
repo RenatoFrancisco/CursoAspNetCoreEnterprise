@@ -1,27 +1,34 @@
-﻿using NSE.Core.Validation;
+﻿namespace NSE.Bff.Compras.Models;
 
-namespace NSE.WebApp.MVC.Models;
-
-public class TransactionOrderViewModel
+public class OrderDTO
 {
     #region Order
+
+    public int Code { get; set; }
+    // Authorized = 1,
+    // Paid = 2,
+    // Recused = 3,
+    // Delivered = 4,
+    // Cacelled = 5
+    public int Status { get; set; }
+    public DateTime Date { get; set; }
 
     public decimal TotalValue { get; set; }
     public decimal Discount { get; set; }
     public string VoucherCode { get; set; }
     public bool UsedVoucher { get; set; }
 
-    public List<ItemCartViewModel> Items { get; set; } = new List<ItemCartViewModel>();
+    public List<ItemCartDTO> Items { get; set; } = new List<ItemCartDTO>();
 
     #endregion
 
-    #region Address
+    #region Addres
 
-    public AddressViewModel Address { get; set; }
+    public AddressDTO Address { get; set; }
 
     #endregion
 
-    #region Cart
+    #region Cartão
 
     [Required(ErrorMessage = "The card number is required")]
     [DisplayName("Card Number")]

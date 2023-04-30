@@ -54,16 +54,9 @@ public class OrderController : MainController
         return RedirectToAction("OrderConcluded");
     }
 
-    [HttpGet]
-    [Route("concluded-order")]
-    public async Task<IActionResult> ConcludedOrder()
-    {
-        return View("ConfirmationOrder", await _orderBffService.GetLastOrderAsync());
-    }
+    [HttpGet("concluded-order")]
+    public async Task<IActionResult> ConcludedOrder() => View("ConfirmationOrder", await _orderBffService.GetLastOrderAsync());
 
     [HttpGet("my-orders")]
-    public async Task<IActionResult> MeusPedidos()
-    {
-        return View(await _orderBffService.GetListByCustomerIdAsync());
-    }
+    public async Task<IActionResult> MeusPedidos() => View(await _orderBffService.GetListByCustomerIdAsync());
 }

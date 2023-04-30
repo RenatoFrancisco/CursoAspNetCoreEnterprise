@@ -3,6 +3,7 @@
 public interface IOrderService 
 {
     Task<VoucherDTO> GetVoucherByCodeAsync(string code);
+    Task<ResponseResult> FinishOrderAsync(OrderDTO order);
 }
 
 public class OrderService : Service, IOrderService
@@ -24,5 +25,16 @@ public class OrderService : Service, IOrderService
         HandleResponseErrors(response);
 
         return await DeserializeResponseObject<VoucherDTO>(response);
+    }
+
+    public async Task<ResponseResult> FinishOrderAsync(OrderDTO order)
+    {
+        var orderContent = GetContent(order);
+
+        var response = await _httpClient.PostAsync("/order/", orderContent);
+
+        if (!HandleResponseErrors(response)) return await DeserializeResponseObject<ResponseResult>(response);
+
+        return ReturnsOK();
     }
 }
