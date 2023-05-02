@@ -45,7 +45,7 @@
                                     <div class="col-md-6">
                                         <figure class="itemside  mb-3">
                                             <div class="aside">
-                                                <img src="~/images/produtos/@item.Image" alt="@item.Name" class="border img-xs">
+                                                <img src="~/images/products/@item.Image" alt="@item.Name" class="border img-xs">
                                             </div>
                                             <figcaption class="info">
                                                 <p>
@@ -63,7 +63,7 @@
 
                     <partial name="_SummaryFinance" model="Model"/>
 
-                    <form asp-action="FinalizarPedido" asp-controller="Pedido">
+                    <form asp-action="FinishOrder" asp-controller="Order">
                         <article class="card-body border-top">
 
                             <div class="card-body">
@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="col-md-4 col-sm-12">
                                         <div>
-                                            <spam data-toggle="tooltip" title="" data-original-title="Os 3 dígitos informados atrás do seu cartão">
+                                            <spam data-toggle="tooltip" title="" data-original-title="The 3 digits indicated on the back of your card">
                                                 <label asp-for="CardCvv"></label> <i class="fa fa-question-circle"></i>
                                             </spam>
 

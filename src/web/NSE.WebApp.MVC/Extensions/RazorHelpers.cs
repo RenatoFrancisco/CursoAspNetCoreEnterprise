@@ -40,4 +40,37 @@ public static class RazorHelpers
 
     public static string UnitsPerProductTotalValue(this RazorPage page, int units, decimal value) =>
         $"{units}x {FormatCurrency(value)} = Total: {FormatCurrency(value * units)}";
+
+    public static string DisplayStatus(this RazorPage page, int status)
+    {
+        var statusMensagem = "";
+        var statusClasse = "";
+
+        switch (status)
+        {
+            case 1:
+                statusClasse = "info";
+                statusMensagem = "Peding Approval";
+                break;
+            case 2:
+                statusClasse = "primary";
+                statusMensagem = "Approved";
+                break;
+            case 3:
+                statusClasse = "danger";
+                statusMensagem = "Recused";
+                break;
+            case 4:
+                statusClasse = "success";
+                statusMensagem = "Delivered";
+                break;
+            case 5:
+                statusClasse = "warning";
+                statusMensagem = "Cancelled";
+                break;
+
+        }
+
+        return $"<span class='badge badge-{statusClasse}'>{statusMensagem}</span>";
+    }
 }

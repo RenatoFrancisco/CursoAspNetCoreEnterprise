@@ -18,6 +18,7 @@ global using NSE.Core.Communication;
 global using System.ComponentModel;
 global using Polly.Extensions.Http;
 global using NSE.WebAPI.Core.User;
+global using System.Globalization;
 global using NSE.Core.Validation;
 global using System.Text.Json;
 global using NSE.Core.Utils;

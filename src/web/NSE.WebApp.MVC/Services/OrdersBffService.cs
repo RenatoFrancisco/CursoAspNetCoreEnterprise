@@ -71,7 +71,7 @@ public class OrdersBffService : Service, IOrdersBffService
     {
         var orderContent = GetContent(transactionOrder);
 
-        var response = await _httpClient.PostAsync("/orders/finish/", orderContent);
+        var response = await _httpClient.PostAsync("/buys/order", orderContent);
 
         if (!HandleResponseErrors(response)) return await DeserializeResponseObject<ResponseResult>(response);
 
@@ -80,7 +80,7 @@ public class OrdersBffService : Service, IOrdersBffService
 
     public async Task<OrderViewModel> GetLastOrderAsync()
     {
-        var response = await _httpClient.GetAsync("/orders/last/");
+        var response = await _httpClient.GetAsync("/buys/orders/last/");
 
         HandleResponseErrors(response);
 
@@ -89,7 +89,7 @@ public class OrdersBffService : Service, IOrdersBffService
 
     public async Task<IEnumerable<OrderViewModel>> GetListByCustomerIdAsync()
     {
-        var response = await _httpClient.GetAsync("/orders/customer-list/");
+        var response = await _httpClient.GetAsync("/buys/order/customer-list");
 
         HandleResponseErrors(response);
 

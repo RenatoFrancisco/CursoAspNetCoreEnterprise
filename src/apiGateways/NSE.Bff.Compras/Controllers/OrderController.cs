@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace NSE.Bff.Compras.Controllers;
+﻿namespace NSE.Bff.Compras.Controllers;
 
 public class OrderController : MainController
 {
@@ -22,7 +20,7 @@ public class OrderController : MainController
 
     [HttpPost]
     [Route("buys/order")]
-    public async Task<IActionResult> AdicionarPedido(OrderDTO order)
+    public async Task<IActionResult> AddOrder(OrderDTO order)
     {
         var cart = await _cartService.GetAsync();
         var products = await _catalogService.GetItemsAsync(cart.Items.Select(p => p.ProductId));
@@ -33,6 +31,27 @@ public class OrderController : MainController
         PopulateOrderData(cart, address, order);
 
         return CustomResponse(await _orderService.FinishOrderAsync(order));
+    }
+
+    [HttpGet("buys/order/last")]
+    public async Task<IActionResult> LastOrder()
+    {
+        var order = await _orderService.GetLastOrderAsync();
+        if (order is null)
+        {
+            AddError("Order not found!");
+            return CustomResponse();
+        }
+
+        return CustomResponse(order);
+    }
+
+    [HttpGet("buys/order/customer-list")]
+    public async Task<IActionResult> ListByCustomer()
+    {
+        var orders = await _orderService.GetListByCustomerIdAsync();
+
+        return orders is null ? NotFound() : CustomResponse(orders);
     }
 
     private async Task<bool> ValidateCartProducts(CartDTO cart, IEnumerable<ItemProductDTO> products)
