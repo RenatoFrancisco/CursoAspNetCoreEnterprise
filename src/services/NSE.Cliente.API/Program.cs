@@ -1,5 +1,3 @@
-using NSE.Cliente.API.Configuration;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
@@ -25,6 +23,8 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader());
 });
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<IAspNetUser, AspNetUser>();
 
 builder.Services.AddScoped<IMediatorHandler, MediatorHandler>();
 builder.Services.AddScoped<IRequestHandler<RegisterCustomerCommand, ValidationResult>, CustomerCommandHandler>();

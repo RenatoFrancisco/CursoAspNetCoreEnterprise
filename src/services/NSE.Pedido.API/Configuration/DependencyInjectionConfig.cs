@@ -14,14 +14,16 @@ public static class DependencyInjectionConfig
         // Events
         services.AddScoped<INotificationHandler<ExecutedOrderEvent>, OrderEventHandler>();
 
+        // Data
+        services.AddScoped<OrdersContext>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IVoucherRepository, VoucherRepository>();
+
         // Application
         services.AddScoped<IMediatorHandler, MediatorHandler>();
         services.AddScoped<IVoucherQueries, VoucherQueries>();
         services.AddScoped<IOrderQueries, OrderQueries>();
 
-        // Data
-        services.AddScoped<IOrderRepository, OrderRepository>();
-        services.AddScoped<IVoucherRepository, VoucherRepository>();
-        services.AddScoped<OrdersContext>();
+        services.AddMediatR(typeof(DependencyInjectionConfig));
     }
 }
