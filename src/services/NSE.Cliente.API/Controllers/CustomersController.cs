@@ -1,6 +1,4 @@
-﻿using NSE.WebAPI.Core.User;
-
-namespace NSE.Cliente.API.Controllers;
+﻿namespace NSE.Cliente.API.Controllers;
 
 public class CustomersController : MainController
 {

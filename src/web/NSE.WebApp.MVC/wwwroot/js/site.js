@@ -1,14 +1,14 @@
-﻿function SearchZipCode() {
+﻿function BuscaCep() {
     $(document).ready(function () {
 
         function limpa_formulário_cep() {
-            $("#Endereco_Logradouro").val("");
-            $("#Endereco_Bairro").val("");
-            $("#Endereco_Cidade").val("");
-            $("#Endereco_Estado").val("");
+            $("#Address_Street").val("");
+            $("#Address_Neighborhood").val("");
+            $("#Address_City").val("");
+            $("#Address_State").val("");
         }
 
-        $("#Endereco_Cep").blur(function () {
+        $("#Address_ZipCode").blur(function () {
 
             var cep = $(this).val().replace(/\D/g, '');
 
@@ -18,29 +18,29 @@
 
                 if (validacep.test(cep)) {
 
-                    $("#Endereco_Logradouro").val("...");
-                    $("#Endereco_Bairro").val("...");
-                    $("#Endereco_Cidade").val("...");
-                    $("#Endereco_Estado").val("...");
+                    $("#Address_Street").val("...");
+                    $("#Address_Neighborhood").val("...");
+                    $("#Address_City").val("...");
+                    $("#Address_State").val("...");
 
                     $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?",
                         function (dados) {
 
                             if (!("erro" in dados)) {
-                                $("#Endereco_Logradouro").val(dados.logradouro);
-                                $("#Endereco_Bairro").val(dados.bairro);
-                                $("#Endereco_Cidade").val(dados.localidade);
-                                $("#Endereco_Estado").val(dados.uf);
+                                $("#Address_Street").val(dados.logradouro);
+                                $("#Address_Neighborhood").val(dados.bairro);
+                                $("#Address_City").val(dados.localidade);
+                                $("#Address_State").val(dados.uf);
                             } 
                             else {
                                 limpa_formulário_cep();
-                                alert("CEP não encontrado.");
+                                alert("Zip Code not found.");
                             }
                         });
                 }
                 else {
                     limpa_formulário_cep();
-                    alert("Formato de CEP inválido.");
+                    alert("Invalid Zip Code format.");
                 }
             }
             else {
