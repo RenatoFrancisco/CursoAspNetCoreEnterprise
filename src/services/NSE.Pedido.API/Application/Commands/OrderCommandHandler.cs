@@ -4,6 +4,7 @@ public class OrderCommandHandler : CommandHandler, IRequestHandler<AddOrderComma
 {
     private readonly IVoucherRepository _voucherRepository;
     private readonly IOrderRepository _orderRepository;
+    private readonly IMessageBus _bus;
 
     public OrderCommandHandler(IVoucherRepository voucherRepository, 
                                IOrderRepository orderRepository)
@@ -21,6 +22,8 @@ public class OrderCommandHandler : CommandHandler, IRequestHandler<AddOrderComma
         if (!await ApplyVoucher(message, order)) return ValidationResult;
 
         if (!ValidateOrder(order)) return ValidationResult;
+
+        if (!await ProcessPayment(order, message)) return ValidationResult;
 
         order.AuthorizeOrder();
 
@@ -98,6 +101,28 @@ public class OrderCommandHandler : CommandHandler, IRequestHandler<AddOrderComma
             AddError("The total value doesn't match with the order calculation");
             return false;
         }
+
+        return true;
+    }
+
+    public async Task<bool> ProcessPayment(Order order, AddOrderCommand message)
+    {
+        var initializedOrder = new InitializedOrderIntegrationEvent
+        {
+            OrderId = order.Id,
+            CustomerId = order.CustomerId,
+            Value = order.TotalValue,
+            PaymentType = 1,
+            CardName = message.CardName,
+            CardNumber = message.CardNumber,
+            ExpireMonthYear = message.CardExpitarion,
+            CVV = message.CardCvv
+        };
+
+        var result = await _bus.RequestAsync<InitializedOrderIntegrationEvent, ResponseMessage>(initializedOrder);
+        if (result.ValidationResult.IsValid) return true;
+
+        result.ValidationResult.Errors.ForEach(e => AddError(e.ErrorMessage));
 
         return true;
     }
