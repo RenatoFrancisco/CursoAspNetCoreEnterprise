@@ -10,7 +10,7 @@ public class PaymentsContext : DbContext, IUnitOfWork
     }
 
     public DbSet<Payment> Payments { get; set; }
-    public DbSet<Transaction> Transactions { get; set; }
+    public DbSet<Models.Transaction> Transactions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

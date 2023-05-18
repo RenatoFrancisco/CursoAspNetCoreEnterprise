@@ -18,6 +18,8 @@ public static class ApiConfig
         services.AddControllers()
             .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 
+        services.Configure<PaymentConfig>(configuration.GetSection("PaymentConfig"));
+
         services.AddDbContext<PaymentsContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("LocaDbConnection")));
 

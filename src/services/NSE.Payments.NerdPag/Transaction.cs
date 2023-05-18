@@ -4,11 +4,13 @@ public class Transaction
 {
     public Transaction(NerdsPagService nerdsPagService) => NerdsPagService = nerdsPagService;
 
-    protected Transaction(){}
+    public Transaction(){ }
 
     private readonly NerdsPagService NerdsPagService;
 
     protected string Endpoint { get; set; }
+
+    public Guid Id { get; set; }
 
     public int SubscriptionId { get; set; }
 

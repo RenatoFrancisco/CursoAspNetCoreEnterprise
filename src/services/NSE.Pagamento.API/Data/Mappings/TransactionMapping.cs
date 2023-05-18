@@ -1,8 +1,8 @@
 ﻿namespace NSE.Pagamento.API.Data.Mappings;
 
-public class TransactionMapping : IEntityTypeConfiguration<Transaction>
+public class TransactionMapping : IEntityTypeConfiguration<Models.Transaction>
 {
-    public void Configure(EntityTypeBuilder<Transaction> builder)
+    public void Configure(EntityTypeBuilder<Models.Transaction> builder)
     {
         builder.HasKey(c => c.Id);
 

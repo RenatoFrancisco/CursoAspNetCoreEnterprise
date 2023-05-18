@@ -1,10 +1,13 @@
 ﻿global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using NSE.Pagamento.API.Configuration;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Options;
 global using NSE.WebAPI.Core.Identity;
 global using NSE.Pagamento.API.Models;
 global using Microsoft.OpenApi.Models;
 global using FluentValidation.Results;
+global using NSE.Pagamento.API.Facade;
+global using NSE.Pagamentos.NerdsPag;
 global using NSE.Pagamento.API.Data;
 global using NSE.Core.DomainObjects;
 global using NSE.WebAPI.Core.User;
