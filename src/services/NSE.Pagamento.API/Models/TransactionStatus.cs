@@ -2,7 +2,7 @@
 
 public enum TransactionStatus
 {
-    Authorozed = 1,
+    Authorized = 1,
     Paid,
     Recused,
     Reversed,

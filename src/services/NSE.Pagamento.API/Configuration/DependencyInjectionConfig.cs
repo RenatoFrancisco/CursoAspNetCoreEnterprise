@@ -8,7 +8,10 @@ public static class DependencyInjectionConfig
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped<IAspNetUser, AspNetUser>();
 
+        services.AddScoped<IPaymentService, PaymentService>();
+        services.AddScoped<IPaymentFacade, CreditCardPaymentFacade>();
 
+        services.AddScoped<IPaymentRepository, IPaymentRepository>();
         services.AddScoped<PaymentsContext>();
     }
 }

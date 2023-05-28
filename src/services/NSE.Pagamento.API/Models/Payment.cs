@@ -13,5 +13,5 @@ public class Payment : Entity, IAggregateRoot
     // EF Relation
     public ICollection<Transaction> Transactions { get; set; }
 
-    public void AdicionarTransacao(Transaction transaction) => Transactions.Add(transaction);
+    public void AddTransaction(Transaction transaction) => Transactions.Add(transaction);
 }

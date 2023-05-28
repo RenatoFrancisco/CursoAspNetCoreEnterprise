@@ -1,6 +1,4 @@
-﻿using Transaction = NSE.Pagamento.API.Models.Transaction;
-
-namespace NSE.Pagamento.API.Data.Repositories;
+﻿namespace NSE.Pagamento.API.Data.Repositories;
 
 public class PaymentRepositiry : IPaymentRepository
 {

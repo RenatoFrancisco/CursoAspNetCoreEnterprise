@@ -1,6 +1,4 @@
-﻿using Transaction = NSE.Pagamentos.NerdsPag.Transaction;
-
-namespace NSE.Pagamento.API.Facade;
+﻿namespace NSE.Pagamento.API.Facade;
 
 public class CreditCardPaymentFacade : IPaymentFacade
 {
@@ -22,7 +20,7 @@ public class CreditCardPaymentFacade : IPaymentFacade
 
         var cardHash = cardHashGen.Generate();
 
-        var transaction = new Transaction(nerdsPagSvc)
+        var transaction = new Pagamentos.NerdsPag.Transaction(nerdsPagSvc)
         {
             CardHash = cardHash,
             CardNumber = payment.CreditCard.CardNumber,
@@ -54,33 +52,32 @@ public class CreditCardPaymentFacade : IPaymentFacade
         return ToTransaction(await transac.CancelAuthorization());
     }
 
-    public static Transaction ToTransaction(Transaction transaction)
+    public static Transaction ToTransaction(Pagamentos.NerdsPag.Transaction transaction)
     {
         return new Transaction
         {
             Id = Guid.NewGuid(),
-            Status = transaction.Status,
-            Amount = transaction.Amount,
+            Status = (Models.TransactionStatus) transaction.Status,
             CardBrand = transaction.CardBrand,
             AuthorizationCode = transaction.AuthorizationCode,
-            Cost = transaction.Cost,
-            CardExpirationDate = transaction.CardExpirationDate,
-            Nsu = transaction.Nsu,
-            Tid = transaction.Tid
+            TransactionCost = transaction.Cost,
+            TransactionDate = transaction.TransactionDate,
+            NSU = transaction.Nsu,
+            TID = transaction.Tid
         };
     }
 
-    public static Transaction ToTransaction(Transaction transaction, NerdsPagService nerdsPagService)
+    public static Pagamentos.NerdsPag.Transaction ToTransaction(Transaction transaction, NerdsPagService nerdsPagService)
     {
-        return new Transaction(nerdsPagService)
+        return new Pagamentos.NerdsPag.Transaction(nerdsPagService)
         {
-            Status = transaction.Status,
-            Amount = transaction.Amount,
+            Status = (Pagamentos.NerdsPag.TransactionStatus)transaction.Status,
+            Amount = transaction.TotalValue,
             CardBrand = transaction.CardBrand,
             AuthorizationCode = transaction.AuthorizationCode,
-            Cost = transaction.Cost,
-            Nsu = transaction.Nsu,
-            Tid = transaction.Tid
+            Cost = transaction.TransactionCost,
+            Nsu = transaction.NSU,
+            Tid = transaction.TID
         };
     }
 }

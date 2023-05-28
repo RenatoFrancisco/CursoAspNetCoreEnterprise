@@ -1,6 +1,4 @@
-﻿using Transaction = NSE.Pagamentos.NerdsPag.Transaction;
-
-namespace NSE.Pagamento.API.Facade;
+﻿namespace NSE.Pagamento.API.Facade;
 
 public interface IPaymentFacade
 {
