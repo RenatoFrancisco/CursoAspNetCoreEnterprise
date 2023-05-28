@@ -13,6 +13,7 @@ global using Microsoft.AspNetCore.Mvc;
 global using NSE.WebAPI.Core.Identity;
 global using NSE.Orders.Domain.Orders;
 global using FluentValidation.Results;
+global using NSE.Pedido.API.Services;
 global using NSE.Orders.Infra.Data;
 global using NSE.WebAPI.Core.User;
 global using NSE.Orders.Domain;
