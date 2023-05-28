@@ -23,9 +23,23 @@ public class OrderOrchestratorIntegrationHandler : IHostedService, IDisposable
         return Task.CompletedTask;
     }
 
-    private void ProcessOrders(object state)
+    private async void ProcessOrders(object state)
     {
-        _logger.LogInformation("Processing orders...");
+        using var scope = _serviceProvider.CreateScope();
+
+        var orderQueries = scope.ServiceProvider.GetRequiredService<IOrderQueries>();
+        var order = await orderQueries.GetAuthorizedOrdersAsync();
+
+        if (order is null) return;
+
+        var bus = scope.ServiceProvider.GetRequiredService<IMessageBus>();
+
+        var authorizedOrder = new AuthorizedOrderIntegrationEvent(order.CustomerId, order.Id,
+                    order.ItemOrders.ToDictionary(p => p.ProductId, p => p.Amount));
+
+        await bus.PublishAsync(authorizedOrder);
+
+        _logger.LogInformation($"Order ID: {order.Id} has been forward to be registered in stock.");
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

@@ -5,6 +5,7 @@ public interface IOrderQueries
 {
     Task<OrderDTO> GetLastorderAsync(Guid customerId);
     Task<IEnumerable<OrderDTO>> GetListByCustomerIdAsync(Guid customerId);
+    Task<OrderDTO> GetAuthorizedOrdersAsync();
 }
 
 public class OrderQueries : IOrderQueries
@@ -38,6 +39,34 @@ public class OrderQueries : IOrderQueries
         var orders = await _orderRepository.GetListByCustomerId(customerId);
 
         return orders.Select(OrderDTO.ParaPedidoDTO);
+    }
+
+    public async Task<OrderDTO> GetAuthorizedOrdersAsync()
+    {
+        const string sql = @"SELECT 
+                                P.ID as 'OrderId', P.ID, P.CUSTOMERID, 
+                                PI.ID as 'ItemOrderId', PI.ID, PI.PRODUCTID, PI.AMOUNT 
+                                FROM ORDERS P 
+                                INNER JOIN ITEMSORDER PI ON P.ID = PI.ORDERID 
+                                WHERE P.STATUSORDER = 1                                
+                                ORDER BY P.CREATEDON";
+
+        var lookup = new Dictionary<Guid, OrderDTO>();
+
+        await _orderRepository.GetConnection().QueryAsync<OrderDTO, ItemOrderDTO, OrderDTO>(sql,
+            (p, pi) =>
+            {
+                if (!lookup.TryGetValue(p.Id, out var orderDTO))
+                    lookup.Add(p.Id, orderDTO = p);
+
+                orderDTO.ItemOrders ??= new List<ItemOrderDTO>();
+                orderDTO.ItemOrders.Add(pi);
+
+                return orderDTO;
+
+            }, splitOn: "OrderId,ItemOrderId");
+
+        return lookup.Values.OrderBy(p => p.CreatedOn).FirstOrDefault();
     }
 
     private OrderDTO MapOrder(dynamic result)
