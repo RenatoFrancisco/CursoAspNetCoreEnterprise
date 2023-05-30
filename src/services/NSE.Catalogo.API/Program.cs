@@ -61,6 +61,9 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<CatalogContext>();
 
+builder.Services.AddMessageBus(builder.Configuration.GetMessageQueueConnection("MessageBus"))
+    .AddHostedService<CatalogIntegrationHandler>();
+
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 

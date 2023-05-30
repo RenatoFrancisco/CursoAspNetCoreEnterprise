@@ -8,6 +8,8 @@ public interface IProductRepository : IRepository<Product>
 
     Task<Product> GetAsync(Guid id);
 
+    Task<List<Product>> GetProductsById(string ids);
+
     void Add(Product product);
 
     void Update(Product product);

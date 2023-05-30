@@ -9,4 +9,12 @@ public class Product : Entity, IAggregateRoot
     public DateTime RegisterDate { get; set; }
     public string Image { get; set; }
     public int StockAmount { get; set; }
+
+    public void RemoveFromStock(int amount)
+    {
+        if (StockAmount >= amount)
+            StockAmount -= amount;
+    }
+
+    public bool IsAvailable(int amount) => Active && StockAmount >= amount;
 }
