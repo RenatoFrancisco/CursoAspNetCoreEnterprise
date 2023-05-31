@@ -34,7 +34,7 @@ public class PaymentService : IPaymentService
                 "Ocurred an error while processing payment."));
 
             // Cancell payment in the gateway
-            await CancellPayment(payment.OrderId);
+            await CancelPayment(payment.OrderId);
 
             return new ResponseMessage(validationResult);
         }
@@ -74,7 +74,7 @@ public class PaymentService : IPaymentService
         return new ResponseMessage(validationResult);
     }
 
-    public async Task<ResponseMessage> CancellPayment(Guid orderId)
+    public async Task<ResponseMessage> CancelPayment(Guid orderId)
     {
         var transactions = await _paymentRepository.GetTransactionsByOrderIdAsync(orderId);
         var authorizedTransaction = transactions?.FirstOrDefault(t => t.Status == Models.TransactionStatus.Authorized);

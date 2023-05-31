@@ -159,9 +159,6 @@ public class Transaction
         return Task.FromResult(transaction);
     }
 
-    private string GetGenericCode()
-    {
-        return new string(Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 10)
+    private string GetGenericCode() => new string(Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 10)
             .Select(s => s[new Random().Next(s.Length)]).ToArray());
-    }
 }
