@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
@@ -89,9 +91,13 @@ app.UseAuthConfiguration();
 
 app.MapControllers();
 
-app.MapGet("catalog/products", (IProductRepository productRepository) =>
-    productRepository.GetAllAsync())
-    .AllowAnonymous();
+app.MapGet("catalog/products", (IProductRepository productRepository, [FromQuery] int ps, [FromQuery] int page, [FromQuery] string q) =>
+{
+    if (ps == 0) ps = 8; 
+    if (page == 0) page = 1;
+
+    productRepository.GetAllAsync(ps, page, q);
+}).AllowAnonymous();
 
 app.MapGet("catalog/products/{id:guid}", (IProductRepository productRepository, Guid id) => productRepository.GetAsync(id))
     .RequireAuthorization("catalog");

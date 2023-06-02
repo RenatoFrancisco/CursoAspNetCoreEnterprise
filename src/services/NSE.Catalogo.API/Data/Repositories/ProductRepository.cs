@@ -1,4 +1,7 @@
-﻿namespace NSE.Catalogo.API.Data.Repositories;
+﻿using Dapper;
+using NSE.Catalogo.API.Models;
+
+namespace NSE.Catalogo.API.Data.Repositories;
 
 public class ProductRepository : IProductRepository
 {
@@ -8,8 +11,31 @@ public class ProductRepository : IProductRepository
 
     public ProductRepository(CatalogContext context) => _context = context;
 
-    public async Task<IEnumerable<Product>> GetAllAsync() => 
-        await _context.Products.AsNoTrackingWithIdentityResolution().ToArrayAsync();
+    public async Task<PagedResult<Product>> GetAllAsync(int pageSize, int pageIndex, string query = null)
+    {
+        var sql = @$"SELECT * FROM Products 
+                      WHERE (@Name IS NULL OR Name LIKE '%' + @Name + '%') 
+                      ORDER BY [Name] 
+                      OFFSET {pageSize * (pageIndex - 1)} ROWS 
+                      FETCH NEXT {pageSize} ROWS ONLY 
+                      SELECT COUNT(Id) FROM Products 
+                      WHERE (@Name IS NULL OR Name LIKE '%' + @Name + '%')";
+
+        var multi = await _context.Database.GetDbConnection()
+            .QueryMultipleAsync(sql, new { Name = query });
+
+        var products = multi.Read<Product>();
+        var total = multi.Read<int>().FirstOrDefault();
+
+        return new PagedResult<Product>()
+        {
+            List = products,
+            TotalResults = total,
+            PageIndex = pageIndex,
+            PageSize = pageSize,
+            Query = query
+        };
+    }
 
     public async Task<Product> GetAsync(Guid id) => await _context.Products.FindAsync(id);
 

@@ -4,7 +4,7 @@ namespace NSE.Catalogo.API.Models;
 
 public interface IProductRepository : IRepository<Product>
 {
-    Task<IEnumerable<Product>> GetAllAsync();
+    Task<PagedResult<Product>> GetAllAsync(int pageSize, int pageIndex, string query = null);
 
     Task<Product> GetAsync(Guid id);
 
