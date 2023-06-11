@@ -10,12 +10,12 @@ public class CatalogService : Service, ICatalogService
         _httpclient = httpclient;
     }
 
-    public async Task<IEnumerable<ProductViewModel>> GetAllAsync()
+    public async Task<PageViewModel<ProductViewModel>> GetAllAsync(int pageSize, int pageIndex, string query = null)
     {
-        var response = await _httpclient.GetAsync("catalog/products/");
+        var response = await _httpclient.GetAsync($"catalog/products?ps={pageSize}&page={pageIndex}&q={query}");
         HandleResponseErrors(response);
 
-        return await DeserializeResponseObject<IEnumerable<ProductViewModel>>(response);
+        return await DeserializeResponseObject<PageViewModel<ProductViewModel>>(response);
     }
 
     public async Task<ProductViewModel> GetByIdAsync(Guid id)

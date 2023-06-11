@@ -14,12 +14,12 @@ public class ProductRepository : IProductRepository
     public async Task<PagedResult<Product>> GetAllAsync(int pageSize, int pageIndex, string query = null)
     {
         var sql = @$"SELECT * FROM Products 
-                      WHERE (@Name IS NULL OR Name LIKE '%' + @Name + '%') 
+                      WHERE (@Name is null or Name LIKE '%' + @Name + '%') 
                       ORDER BY [Name] 
                       OFFSET {pageSize * (pageIndex - 1)} ROWS 
                       FETCH NEXT {pageSize} ROWS ONLY 
                       SELECT COUNT(Id) FROM Products 
-                      WHERE (@Name IS NULL OR Name LIKE '%' + @Name + '%')";
+                      WHERE (@Name is null or Name LIKE '%' + @Name + '%')";
 
         var multi = await _context.Database.GetDbConnection()
             .QueryMultipleAsync(sql, new { Name = query });

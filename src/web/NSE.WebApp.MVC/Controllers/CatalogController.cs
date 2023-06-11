@@ -9,9 +9,10 @@ public class CatalogController : MainController
     [HttpGet]
     [Route("")]
     [Route("catalog")]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index([FromQuery] int ps, [FromQuery] int page, [FromQuery] string q = null)
     {
-        var products = await _catalogService.GetAllAsync();
+        var products = await _catalogService.GetAllAsync(ps, page, q);
+        ViewBag.Search = q;
         return View(products);
     }
 
