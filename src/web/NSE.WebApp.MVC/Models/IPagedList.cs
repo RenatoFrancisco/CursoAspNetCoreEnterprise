@@ -1,9 +1,8 @@
 ﻿namespace NSE.WebApp.MVC.Models;
 
-public class PageViewModel<T> : IPagedList where T : class
+public interface IPagedList
 {
     public string ReferenceAction { get; set; }
-    public IEnumerable<T> List { get; set; }
     public int PageIndex { get; set; }
     public int PageSize { get; set; }
     public string Query { get; set; }

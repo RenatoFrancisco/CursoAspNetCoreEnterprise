@@ -13,6 +13,8 @@ public class CatalogController : MainController
     {
         var products = await _catalogService.GetAllAsync(ps, page, q);
         ViewBag.Search = q;
+        products.ReferenceAction= "Index";
+
         return View(products);
     }
 
